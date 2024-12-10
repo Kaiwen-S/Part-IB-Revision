@@ -1,0 +1,398 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{enumerate,bbm}
+\usepackage{tikz,graphicx,color,mathrsfs,color,hyperref}
+\usepackage{caption,float}
+\usepackage[a4paper,margin=1in,footskip=0.25in]{geometry}
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+\usepackage{tabularx,capt-of}
+
+\usepackage{blindtext}
+%Image-related packages
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage[export]{adjustbox}
+\usepackage{lipsum}
+
+%hyperref setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
+
+%New colors defined below
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+%Code listing style named "mystyle"
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{backcolour}, commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=left,                    
+  numbersep=5pt,                  
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2
+}
+
+%"mystyle" code listing set
+\lstset{style=mystyle}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}[section]
+\theoremstyle{remark}
+\newtheorem{rem}{Remark}
+\newtheorem{remS}[section]{defn}
+\newtheorem{lem}[defn]{Lemma}
+\theoremstyle{plain}
+\newtheorem{thm}[defn]{Theorem}
+\newtheorem{prop}[defn]{Proposition}
+\newtheorem{fact}[defn]{Fact}
+\newtheorem{crly}[defn]{Corollary}
+\newtheorem{conj}[defn]{Conjecture}
+\newtheorem{example}{Example}
+\theoremstyle{definition}
+%\newtheorem*{programming*}{Programming Task}
+
+%\newtheorem{innercustomgeneric}{\customgenericname}
+%\providecommand{\customgenericname}{}
+%\newcommand{\newcustomtheorem}[2]{%
+%  \newenvironment{#1}[1]
+%  {%
+%   \renewcommand\customgenericname{#2}%
+%   \renewcommand\theinnercustomgeneric{##1}%
+%   \innercustomgeneric
+%  }
+%  {\endinnercustomgeneric}
+%}
+
+%\newcustomtheorem{question}{Question}
+%\newcustomtheorem{programming}{Programming Task}
+
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\PP}{\mathbb{P}}
+
+\newcommand{\calD}{\mathcal{D}}
+
+\title{Geo}
+\author{ }
+\date{ }
+
+\begin{document}
+\maketitle
+\section{Embedded surfaces}
+\begin{thm}[Implicit function theorem]
+    Let $T\subseteq\RR^{k+l}$ be an open subset (use coordinate $(x,z)$, where $x\in\RR^k$, $z\in\RR^l$). Let $p=(a,b)\in f^{-1}(0)\subseteq T$ If $\det(\partial_{z_j}\partial f_i)\neq 0$, then there exists open nbd $A$ of $a$ in $\RR_k$ and $B$ of $b$ in $\RR^l$ and smooth $F:A\to B$ s.t. $A\times B\subseteq T$ and $f^{-1}(0)\cap(A\times B)=\{(x,F(x)):x\in A\}$.
+\end{thm}
+\begin{proof}
+    Define $g(x,z)=(x,f(x,z))$. Then compute the derivative, which is invertible, so by IFT Find $T, V$ s.t. $g:T\to V$ is a diffeo with $g(p)=(a,0)$. Inverse is given by $H(u,v)=(u,H(u,v))$ Restrict to $U=V\cap \RR^k\times\{0\}$, get $h(u,0)=(u,F(u))$, where $F$ is a smooth map $U\to \RR^l$. Pick $A,B$ (nbd of $a$, $b$) sufficiently small s.t. $A\times B\subseteq T$. Shrink $A$ if necessary, may assume that $A\subseteq F^{-1}(B)$, then $F:A\to B$ is the desired smooth map. Can check $(x,z)\in F^{-1}(0)$ iff $g(x,z)=(x,0)$ iff $(x,z)=h(x,0)=(x,F(x))$ iff $z=F(x)$.
+\end{proof}
+\begin{thm}[Equivalent definitions of smoothly embedded surfaces]
+Let $\Sigma\subseteq\RR^3$. $\Sigma$ is a smoothly embedded surface if one of the following equivalent conditions holds.\\
+\begin{itemize}
+    \item $\forall p\in\Sigma$, $\exists$ open nbd $T$ of $p$ in $\RR^3$ and a smooth function $f:T\to\RR$ s.t. $\Sigma\cap T=f^{-1}(0)$ and $D_pf$ is non-zeo.
+    \item $\forall p\in\Sigma$, $\exists$ open nbd $T$ of $p$ in $\RR^3$ and $W$ of $0$ and diffeo $g:T\to W$ s.t. $g(\Sigma\cap T)=W\cap(\RR^2\times\{0\})$.
+    \item $\forall p\in \Sigma$, there is a parametrization of $\Sigma$ near $p$, i.e., there is an open nbd $U$ of $p$ in $\Sigma$ and open $V\subseteq\RR^2$ and a homeomorphism $\sigma:V\to U$ that is smooth as a map to $\RR^3$ for all $q\in V$.
+    \item $\Sigma$ is locally a graph over a coordinate plane. (Essentially implicit function theorem)
+\end{itemize}
+\end{thm}
+\begin{prop}[Change of coordinate]
+    $\sigma(u,v)$ and $\tau(x,y)$ parametrizations, then write $\psi=\sigma^{-1}\circ\tau$, i.e., $\psi(x,y)=(u(x,y),v(x,y))$, then (expand by chain rule)
+    \begin{align*}
+        \begin{pmatrix}
+            \tau_x & \tau_y
+        \end{pmatrix}=\begin{pmatrix}
+            \sigma_u & \sigma_v
+        \end{pmatrix}\begin{pmatrix}
+            u_x & u_y\\
+            v_x & v_y
+        \end{pmatrix}
+    \end{align*}
+\end{prop}
+\begin{defn}[Gauss map and orientability]
+    \begin{align*}
+        \vec n(p)=\dfrac{\sigma_u\times\sigma_v}{\Vert\sigma_u\times\sigma_v\Vert}
+    \end{align*}
+    A smooth surface is orientable if it admits a global Gauss map.
+\end{defn}
+\begin{prop}
+    A smooth surface is orientable iff it can be covered by a collection of parametrizations $\{\sigma_\alpha:\alpha\in I\}$ s.t. all transition functions $\psi_{\alpha\beta}=\sigma_\alpha^{-1}\circ\sigma_\beta$ are orientation preserving, i.e., $\det D\psi_{\alpha\beta}>0$
+\end{prop}
+\begin{proof}
+    
+\end{proof}
+
+\subsection{Fundamental forms}
+\begin{defn}[FFF]
+    Family of inner product $I_p$ of tangent space obtained by restricting the standard inner product of $\RR^3$.
+\end{defn}
+\begin{prop}
+    In parametrization $\sigma(u,v)$, Can express FFF as a symmetric bilinear form $Edu^2+2Fdudv+Gdv^2$, where $E=\sigma_u\cdot\sigma_u$, $F=\sigma_u\cdot \sigma_v$ and $G=\sigma_v\cdot\sigma_v$.
+\end{prop}
+\begin{proof}
+    Evaluate at basis vectors $\sigma_u$ and $\sigma_v$.
+\end{proof}
+\begin{defn}[Pullback]
+    Smooth map $H:\Sigma_1\to \Sigma_2$ between embedded surfaces. Let $\sigma(u,v)$ be a parametrization of $H$ near $p$. The pullback of FFF via $H$ is given (in components) by $(H\circ\sigma)_u\cdot (H\circ\sigma)_u=H_u\cdot H_u$... (similarly for $v$)..
+\end{defn}
+
+\begin{defn}[SFF]
+    Let $H:\Sigma\to T_p\Sigma$ be the orthogonal projection, then by direct computation, $H$ is a local diffeo at $p$ so has a smooth inverse $H^{-1}$ defined on an open nbd $W$ of $0$ in $T_p\Sigma$. Then there is a unique $f:W\to\RR$ s.t. $H^{-1}(w)=p+w+f(w)n(p)$ and $f(0)=0$, $D_0f=0$. Then $II_p$ is the symmetric bilinear form on $T_p\Sigma$ given by the Hessian of $f$. Given a choice of Gauss map on some $U\subseteq\Sigma$, SFF is the family $II_p$.
+\end{defn}
+\begin{lem}
+    Existence and uniqueness of $f:W\to\RR$.
+\end{lem}
+\begin{proof}
+    Define $e:W\to \RR^3$ $w\mapsto H^{-1}(w)-(p+w)$. By IFT $D_0e=0$. Consider the orthogonal projection $\pi:\RR^3\to T_p\Sigma$, then $\pi(e(w))=\pi(H^{-1}(w))-\pi(p)-\pi(w)=w-w=0$, so $e(w)\perp T_p\Sigma$, so $e(w)=f(w)n(p)$. Clearly $f(0)=0$ and $D_0f=0$ ($D_0e=0$).
+\end{proof}
+\begin{prop}
+    Given a parametrization $\sigma(u,v)$, can express $SFF$ as $Ldu^2+2Mdudv+Ndv^2$, where $L=\sigma_{uu}\cdot n$, $M=\sigma_{uv}\cdot n$, and $N=\sigma_{vv}\cdot n$.
+\end{prop}
+\begin{proof}
+
+\end{proof}
+\begin{defn}[Gaussian curvature]
+    Fix a Gauss map $n:U\to S^2$, then $D_pn$ is an endomorphism of $T_p\Sigma$. Define (Gaussian curvature) $K(p)=\det D_pn$.
+\end{defn}
+\begin{prop}
+    $D_pn$ is self-adjoint (wrt $I_p$). Moreover, $I_p(\cdot, D_pn(\cdot))=-II_p$.
+\end{prop}
+\begin{proof}
+    Suffices to check the basis vectors of $T_p\Sigma$. Direct computation,
+    \[\sigma_u\cdot D_pn(\sigma_v)=\sigma_u\cdot (n\circ\sigma)_v=(\sigma_u\cdot n)_v-(\sigma_{uv}\cdot n)=-M\]
+    Similarly expand $D_pn(\sigma_u)\cdot\sigma_v$ and use commutativity of mixed partial.
+\end{proof}
+\begin{crly}
+    $K=\dfrac{LN-M^2}{EG-F^2}$
+\end{crly}
+\begin{proof}
+    Write down the matrices and take $\det$.
+\end{proof}
+\subsection{Geodesics}
+\begin{defn}[Geodesics]
+    A geodesic in $\Sigma$ is a path $\gamma:I\to\Sigma$ defined on an open/closed interval s.t. $\forall t\in I$, $\ddot{\gamma}(t)\perp T_{\gamma(t)}\Sigma$ and $\gamma$ is non-constant.
+\end{defn}
+\begin{thm}[Geodesic equations]
+    A curve $\gamma(t)=\sigma(u(t),v(t))$ is a geodesic iff 
+    \[\begin{cases}
+    (E\dot u+F\dot v)^{\bullet}=\frac{1}{2} E_u\dot u^2+F_u\dot u\dot v+\frac{1}{2}G_u\dot v^2\\
+    (F\dot u+ E\dot v)^\bullet = \frac{1}{2} E_v\dot u^2+F_v\dot u\dot v+\frac{1}{2}G_v\dot v^2
+    \end{cases}\]
+\end{thm}
+\begin{proof}
+    Expand the condition $\ddot{\gamma}\perp \sigma_u$ and $\ddot{\gamma}\perp\sigma_v$. (Differentiate by MVC). Alternatively, apply E-L equation to the energy functional.
+\end{proof}
+\begin{crly}
+    If $\gamma$ is a geodesic on $\Sigma$, then $\gamma$ has constant speed, i.e., $\Vert\dot\gamma\Vert$ is constant.
+\end{crly}
+\begin{proof}
+    Differentiate, $(\dot\gamma\cdot\dot\gamma)^\bullet=2\ddot\gamma\cdot\dot\gamma=0$ by definition as $\dot\gamma(t)\in T_{\gamma(t)}\Sigma$.
+\end{proof}
+\begin{defn}[Energy]
+$\gamma:[t_0,t_1]\to\Sigma$.
+    $\operatorname{Energy}(\gamma)=\int_{t_0}^{t_1}I_{\gamma(t)}(\dot\gamma(t),\dot\gamma(t))dt$
+\end{defn}
+\begin{prop}
+    $\gamma$ is a geodesic iff it's a staionary point of energy among paths with fixed end-points, i.e., for all one-parameter variation $\Gamma(s,t)$ with $\Gamma(s,t_0)=\gamma(t_0)$ and $\Gamma(s,t_1)=\gamma(t_1)$, $d\mathcal{E}/ds(0)=0$
+\end{prop}
+\begin{proof}
+    only if part is easy. IBP on $\mathcal{E}'(0)$ and use the fact that $\ddot\gamma(t)\perp T_{\gamma(t)}\Sigma$. Conversely, need to use bump function (probably not required to know)
+\end{proof}
+\begin{prop}
+    $\gamma$ is a geodesic iff it's a stationary point of length functional and has constant speed.
+\end{prop}
+\begin{proof}
+    Apply E-L equation to the length functinoal and relate that to the energy functional (square root).
+\end{proof}
+\begin{prop}
+    Local isometry preserves geodesics
+\end{prop}
+\begin{proof}
+    (Sheet 3 Q2)
+\end{proof}
+\begin{thm}[(Local) existence and uniqueness]
+    
+\end{thm}
+\begin{proof}
+    Picard-Lindel\"of.
+\end{proof}
+\section{Topological and smooth surfaces}
+\begin{defn}
+    A topological manifold is a second-countable, Hausdorff, locally Euclidean topological space.
+\end{defn}
+\begin{lem}
+    Let $X$ be a topological space that is locally Euclidean. Then
+    \begin{itemize}
+        \item $X$ is connected iff it's path-connected;
+        \item $X$ is second countable iff it's Lindel\"of;
+        \item $X$ is Hausdorff iff it's regular (points and closed sets can be separated by disjoint open sets)
+    \end{itemize}
+\end{lem}
+\begin{proof}
+    (Sheet 3 Q5)
+\end{proof}
+\begin{defn}[Free and proper group action]
+    An action of a group $G\le\operatorname{Homeo}(X)$ on a top. space $X$ is free and proper if
+    \begin{itemize}
+        \item For all $p\in X$, there exists open nbd $U$ of $p$ such that $gU\cap U=\varnothing$ for all $e\neq g\in G$.
+        \item For $p_1, p_2$ in distinct orbits, there exists open nbd $U_i$ of $p_i$ s.t. $gU_1\cap gU_2=\varnothing$ for all $g\in G$.
+    \end{itemize}
+\end{defn}
+\begin{prop}
+    If $\Sigma$ is a top. surface with a free and proper action by $G\le\operatorname{Homeo}(X)$, then $\Sigma/G$ is a top. surface (equipped with quotient topology).
+\end{prop}
+\begin{proof}
+    Important: $q:\Sigma\to\Sigma/G$ is an open map. Check that $q^{-1}(q(T))=\bigcup_{g\in G}gT$ open for each $T\subseteq\Sigma$ open, then by defn of quotient topology, $q(T)$ is open in $\Sigma/G$.
+
+    Locally euclidean: Pick a chart of $p\in \Sigma$, say $\varphi':U'\to V'$. Pick another open nbd $U''$ s.t. $gU''\cap U''=\varnothing$ Let $U=U'\cap U''$. Then prove that $q|_U$ is a homeo (clearly cts and surj, assume not inj, then two distinct pts are related by an element $g\in G$, but by construction $g=e$ is forced, so they are actually the same). Compose, get a chart on $\Sigma/G$.
+
+    Hausdorff: Use free and properness to choose separating nbd of two points (in distinct orbits) and pass to the orbit space ($q$ is open).
+
+    Lindelof: $\Sigma$ is second countable hence Lindelof, pass to the image ($q$ is cts) and use the fact that $\Sigma/G$ is locally Euclidean to deduce that $\Sigma/G$ is also second countable.
+\end{proof}
+\begin{defn}[Smooth surface]
+    A smooth surface is a top. surface equipped with a smooth structure (an atlas s.t. transition functions are diffeo)
+
+    Orientable if admits a smooth atlas s.t. all transition func $\psi$ satisfy $\det D\psi>0$.
+\end{defn}
+\begin{defn}[Smooth map]
+    A map between smooth surfaces is smooth if it's cts (this is crucial) and $\phi_2\circ F\circ \phi_1^{-1}$ is smooth.
+\end{defn}
+\begin{prop}
+    If a group $G$ acts freely and properly on a smooth surface $\Sigma$ by diffeo, then $\Sigma/G$ is a smooth surface.
+\end{prop}
+\begin{proof}
+    Transition functions are of the form $T=\phi_2\circ q|_{U_2}^{-1}\circ q|_{U_1}\circ\phi_1^{-1}:W_1\to W_2$. Pick $p\in W_1$, then $T(p)=gp$ for some $g$, then Consider any $p'\in W_1\cap g^{-1}W_2$ (open nbd of $p$), then $T(p')=g'p$, have $g'p\in W_2$ and $g'p\in g'g^{-1}W_2$, so $W_2\cap g'g^{-1}W_2\neq\varnothing$, but $W_2$ is a subset of the domain of some chart, which is chosen so that it doesn't intersect its non-trivial translation, so $g'g^{-1}=e$. So $T$ acts on $W_1\cap g^{-1}W_2$ by translation which is smooth, so the transition function is smooth.
+\end{proof}
+\section{Riemannian geometry}
+\begin{defn}[Generalization of section 1]
+    \begin{itemize}
+        \item Riemannian metric: smooth family of symmetric bilinear form s.t. it's positive definite at each point.
+        \item Geodesics: a smooth path that satisfies the geodesic equation (equivalently, stationary pt of energy functional under one-parameter variations fixing end pts)
+        \item Pullback (of a Riemannian metric): Let $H:(\Sigma_1,g_1)\to(\Sigma_2,g_2)$ be a smooth map between Riemannian 2-manifolds (surfaces). The pullback $H^\ast g_2$ is defined in each chart $\phi_1$ on $\Sigma_1$ as follows. Pick a chart $\phi_2$ on $\Sigma_2$ then the components $A,B,C$ of the pullback in $\phi_1$ is given by
+        \[\begin{pmatrix}
+            A&B\\ B&C
+        \end{pmatrix}_{\phi_1(p)}=(D_{\phi_1(p)}\psi)^T\begin{pmatrix}
+            E_2&F_2\\ F_2&G_2
+        \end{pmatrix}_{\phi_2(p)}(D_{\phi_1(p)}\psi)\]
+        where $\psi=\phi_2\circ H\circ\phi_1^{-1}$.
+    \end{itemize}
+\end{defn}
+\begin{prop}
+    Local isometry iff conformal and area-preserving.
+\end{prop}
+\begin{prop}
+    If $G$ acts freely and properly by isometry on $(\Sigma,g)$, then there is a unique Riemannian metric on $\Sigma/G$ s.t. the quotient map is a local isometry.
+\end{prop}
+\begin{proof}
+    For any chart $\phi:U\to V$ of $\Sigma$, define components of the Riemannian metric on $\Sigma/G$ on the chart $\phi\circ q|_U^{-1}$ to be the same as $g$ in $\phi$. This is the unique choice making $q$ a local isometry. It suffices to prove that this satisfies the transformation law. Start from the transformation law on $\Sigma$. Transition on $\Sigma$ is $\psi=\phi_2\circ\phi_1^{-1}$ and transition on $\Sigma/G$ is $\bar\psi=(\phi_2\circ q|_{U_2}^{-1})\circ (\phi_1\circ q|_{U_1}^{-1})^{-1}$. They are related by
+    \[\psi=\bar\psi\circ \chi\]
+    where $\chi:=\phi_1\circ (q|_{U_1}^{-1}\circ q|_{U_2})\circ \phi_1^{-1}$. The thing in the middle of $\chi$ is $T$, which acts by some elements $g$ so is an isometry by assumption, so apply chain rule and transformation law on $\Sigma$, we get the desired result.
+\end{proof}
+\begin{defn}[Triangulation]
+Stuff related to triangulation
+\begin{itemize}
+    \item Smooth triangle is a smooth embedding of a closed triangle in $\RR^2$ into some Riemannian surface.\
+    \item A smooth triangulation of $\Sigma$ is a collection of smooth triangles covering $\Sigma$ such that the intersection of two of them is either empty or a common face (edge or vertex).
+    \item A geodesic triangle is a smooth triangle such that the edges are geodesics (up to reparametrization). Can define geodesic polygons similarly.
+    \item A geodesic triangulation is a smooth triangulation such that each smooth triangle is a geodesic triangle.
+\end{itemize}
+      
+\end{defn}
+\begin{thm}[Gauss-Bonnet]
+    For all smooth triangulation of $\Sigma$, have $\int_\Sigma KdA=2\pi\chi(\Sigma)$
+\end{thm}
+\begin{thm}[Gauss-Bonnet for geodesic $n$-gon]
+    Let $(T,f)$ be a geodesic $n$-gon, then $\int_{f(T)}KdA=2\pi-\sum\text{exterior angles}$
+\end{thm}
+\section{Hyperbolic geometry}
+Some important groups
+\begin{itemize}
+    \item $\mathcal{M}_H$, Mobius maps of the form $\frac{az+b}{cz+d}$ where $a,b,c,d\in\RR$ and $ad-bc>0$
+    \item $\mathcal{M}_D$, Mobius maps of the form $e^{i\alpha}\frac{z-a}{\bar az-1}$, where $\alpha\in\RR$, $|a|<1$
+\end{itemize}
+
+\begin{defn}
+    Upper half plane model: equipped with 
+    \[g_H=\dfrac{dx^2+dy^2}{y^2}=\dfrac{|dz|^2}{\operatorname{Im}(z)^2}\]
+\end{defn}
+\begin{defn}
+    Disk model: equipped with
+    \[g_D=\dfrac{4(dx^2+dy^2)}{(1-x^2-y^2)^2}=\dfrac{4|dz|^2}{(1-|z|^2)^2}\]
+    This is defined so that the Mobius map $z\mapsto \frac{z-i}{z+i}$ is an isometry from $H$ to $D$.
+\end{defn}
+
+\begin{prop}
+    $\mathcal{M}_H$ acts on $H$ by isometry
+\end{prop}
+\begin{proof}
+    Check generators $z\mapsto az$, $z\mapsto z+c$ and $z\to-1/z$. The first two are straightforward; the last one is almost trivial with complex coord.
+\end{proof}
+\begin{prop}
+    $\mathcal{M}_D$ acts on $D$ by isometry.
+\end{prop}
+\begin{proof}
+    
+\end{proof}
+\begin{lem}
+    If $\phi\in\operatorname{Isom}(D)$, $\phi(0)=0$, and  $D_0\phi=\operatorname{id}$, then $\phi=\operatorname{id}$.
+\end{lem}
+\begin{lem}
+    If $\phi\in\operatorname{Isom}(H)$, $\phi(i)=i$, and $D_i\phi=\operatorname{id}$, then $\phi=\operatorname{id}$.
+\end{lem}
+\begin{prop}
+    $\mathcal{M}_H=\operatorname{Isom}^+(H)$ and $\mathcal{M}_D=\operatorname{Isom}^+(D)$.
+\end{prop}
+\begin{proof}
+    Let $\Sigma(u,v)=(u,v)$ be the obvious parametrization.
+    
+    Clearly $\mathcal{M}_D\subseteq\operatorname{Isom}^+(D)$, Conversely, if $\phi\in\operatorname{Isom}^+(D)$, then by composing with $z\mapsto (z-\phi(0))/(\overline{\phi(0)}z-1)$ if necessary, can assume WLOG that $\phi(0)=0$. Now $D_0\phi$ is an automorphism of $\RR^2$. Since $\phi$ is an orientation-preserving isometry, $D_0\phi$ is orthogonal and have determinant $+1$, so by applying a rotation if necessary, we may assume that $D_0\phi$ fixes $\sigma_u$, then orientation forces $D_0\phi=\operatorname{id}$, then $\phi=\operatorname{id}$ by preceding lemma, so $\phi\in\mathcal{M}_D$. Done.
+
+    Can use similar argument on $D_i\varphi$ for $\varphi\in\operatorname{Isom}^+(H)$. Alternatively conjugate using the map $z\mapsto (z-i)/(z+i)$ and work in $D$.
+\end{proof}
+\begin{prop}
+    $\operatorname{Isom}(D)$ is generated by $\operatorname{Isom}^+(D)$ and $z\mapsto\bar z$; $\operatorname{Isom}(H)$ is generated by $\operatorname{Isom}^+(H)$ and $z\mapsto-\bar z$.
+\end{prop}
+\begin{proof}
+    The last step gives two choices for the image of the second basis vector, so compose with the orientation reversing map if necessary.
+\end{proof}
+\section{Calculation}
+\begin{example}[Surface of revolution]
+    $\sigma(u,v)=(f(u)\cos(v),f(u)\sin(v),g(u))$, then $\sigma_u=(f'(u)\cos(v),f'(u)\sin(v),g'(u))$
+    and $\sigma_v=(-f(u)\sin(v),f(u)\cos(v),0)$. So FFF is $$(f'^2+g'^2)du^2+f^2dv^2$$
+    Gauss map
+    \[\vec n=\dfrac{(g'\cos v, g\sin v, -f')}{\sqrt{f'^2+g'^2}}\]
+    SFF
+    \[\dfrac{1}{\sqrt{f'^2+g'^2}}[(f''g'-f'g'')du^2-fg'dv^2]\]
+    Gaussian curvature
+    \[\kappa=\dfrac{g'(g''f'-g'f'')}{f(f'^2+g'^2)^2}\]
+    Geodesic equations (assume unit speed parametrization):
+    
+\end{example}
+\begin{defn}[Cross ratio]
+    \[[z_1,z_2;z_3,z_4]=\left(\dfrac{z_3-z_1}{z_3-z_2}\right)\Big/\left(\dfrac{z_4-z_1}{z_4-z_2}\right)=\dfrac{(z_3-z_1)(z_4-z_2)}{(z_3-z_2)(z_4-z_1)}\]
+\end{defn}
+\end{document}

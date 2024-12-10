@@ -1,0 +1,502 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{enumerate,bbm}
+\usepackage{tikz,graphicx,color,mathrsfs,color,hyperref}
+\usepackage{caption,float}
+\usepackage[a4paper,margin=1in,footskip=0.25in]{geometry}
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+\usepackage{tabularx,capt-of}
+
+\usepackage{blindtext}
+%Image-related packages
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage[export]{adjustbox}
+\usepackage{lipsum}
+
+%hyperref setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
+
+%New colors defined below
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+%Code listing style named "mystyle"
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{backcolour}, commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=left,                    
+  numbersep=5pt,                  
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2
+}
+
+%"mystyle" code listing set
+\lstset{style=mystyle}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}[section]
+\theoremstyle{remark}
+\newtheorem{rem}{Remark}
+\newtheorem{remS}[section]{defn}
+\newtheorem{lem}[defn]{Lemma}
+\theoremstyle{plain}
+\newtheorem{thm}[defn]{Theorem}
+\newtheorem{prop}[defn]{Proposition}
+\newtheorem{fact}[defn]{Fact}
+\newtheorem{crly}[defn]{Corollary}
+\newtheorem{conj}[defn]{Conjecture}
+\newtheorem{example}{Example}
+\theoremstyle{definition}
+%\newtheorem*{programming*}{Programming Task}
+
+%\newtheorem{innercustomgeneric}{\customgenericname}
+%\providecommand{\customgenericname}{}
+%\newcommand{\newcustomtheorem}[2]{%
+%  \newenvironment{#1}[1]
+%  {%
+%   \renewcommand\customgenericname{#2}%
+%   \renewcommand\theinnercustomgeneric{##1}%
+%   \innercustomgeneric
+%  }
+%  {\endinnercustomgeneric}
+%}
+
+%\newcustomtheorem{question}{Question}
+%\newcustomtheorem{programming}{Programming Task}
+
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\PP}{\mathbb{P}}
+
+\newcommand{\calD}{\mathcal{D}}
+
+\title{AT}
+\author{ }
+\date{ }
+
+\begin{document}
+\maketitle
+\section{Convergence and continuity}
+\begin{thm}[General principle of uniform convergence]
+    Let $f_n:I\to\RR$ be a sequence of functions. $f_n$ converges uniformly iff $f_n$ is uniformly Cauchy. 
+\end{thm}
+\begin{proof}
+    $\Rightarrow$: Trivial. $\Leftarrow$: Prove pointwise convergence first. Use uniformly Cauchy property. Take limit. 
+\end{proof}
+\begin{thm}
+    Let $f_n:I\to\RR$ be a sequence of functions. $f_n\to f$ uniformly iff $\sup_{x\in I}|f_n(x)-f(x)|\to 0$ as $n\to 0$.
+\end{thm}
+\begin{proof}
+    Immediate from definition.
+\end{proof}
+
+\begin{thm}
+    Uniform limit of continuous function is continuous.
+\end{thm}
+\begin{proof}
+    $\epsilon/3$ argument.
+\end{proof}
+\begin{thm}
+If $f_n\to f$ uniformly on $[a,b]\subseteq\RR$ (closed bounded), and each $f_n$ is Riemann integrable on $[a,b]$, then $f$ is Riemann integrable and $\lim_n\int_a^b f_n=\int_a^b f$.
+\end{thm}
+\begin{proof}
+    First, note that each $f_n$ is bounded, so $f=f_n+(f-f_n$ is also bounded.
+    
+    Let $\epsilon>0$ be given. By unif. conv., there exists $N$ s.t. $\forall x\in[a,b]$, $|f_N(x)-f(x)|<\epsilon/(3(b-a))$. So, on any $I\subseteq[a,b]$, $\sup_I f\le \sup_If_N+\epsilon/(3(b-a))$.
+    
+    By Riemann-integrability of $f_N$, there exists a dissection $\calD=\{a=x_0<x_1<\ldots<x_k=b\}$ s.t. 
+    \[U(f_N,\calD)-L(f_N,\calD)<\epsilon/3\]
+    Combine the results above, we get \begin{align*}
+        U(f,\calD)\le U(f_N,\calD)+\epsilon/3\\
+        L(f,\calD)\ge L(f_N,\calD)-\epsilon/3
+    \end{align*}
+    Subtract, we get
+    \[U(f,\calD)-L(f,\calD)\le \epsilon/3+\epsilon/3+\epsilon/3=\epsilon\] 
+\end{proof}
+\begin{thm}
+    Let $(f_n:[a,b]\to \RR)$ be a sequence of differentiable functions such that $\exists x_0\in[a,b]$ s.t. $f_n(x_0)$ converges. Suppose $f_n'$ converges uniformly on $[a,b]$, then $f_n$ converges uniformly to a differentiable function $f$, and $f'=\lim_n f_n'$.
+\end{thm}
+\begin{proof}
+(c.f. 2011 and 2010 analysis II) Define auxilliary function 
+\[g_{c,n}(x)=\begin{cases}
+\dfrac{f_n(x)-f(c)}{x-c}& x\neq c\\
+f_n'(c) & x=c
+\end{cases}\]
+Prove that $(g_{c,n})$ is uniformly Cauchy (using MVT) and converges to $g_c(x)=(f(x)-f(c))/(x-c)$. Interchange limit. 
+\end{proof}
+    Alteranative (weaker) version: Suppose $f_n'\to g$ uniformly. If $f_n$ are continuously differentiable, then $f_n$ converges ptwise to a diff functions. 
+    
+    Have $f_n(x)=f_n(x_0)+\int_{x_0}^x f_n'$ by FTC. Unif. conv. implies that $\int_{x_0}^x f_n'\to \int_{x_0}^x g$, so have $f_n$ converges pointwise, and the pointwise limit is diff by FTC.
+\begin{thm}
+    Continuous functions on closed bounded intervals are uniformly continuous.
+\end{thm}
+\begin{proof}
+    1) By compactness (need Heine-Borel); OR 2) by contradiction (Use Bolzano-Weierstrass).
+
+    Special case of ``Continuous functions on a sequentially compact metric space are uniformly continuous''.
+\end{proof}
+\begin{thm}[Riemann integrability of continuous functions]
+    Continuous functions on closed bounded intervals are Riemann integrable
+\end{thm}
+\begin{proof}
+    Given $\epsilon>0$, can find $\delta>0$ s.t. $|f(x)-f(y)|<\epsilon/(b-a)$ whenever $|x-y|<\delta$. Take a dissection $\calD$ of $[a,b]$ s.t. each subinterval has length $<\delta$, then $U(f,\calD)-L(f,\calD)<\epsilon$.
+\end{proof}
+\begin{thm}[Weierstrass M-test]
+    If there exists a sequence $(M_n)$ of non-negative real numbers s.t. $|f_n|\le M_n$ for all $n\in\NN$ and $\sum_n M_n$ converges, then $\sum_n f_n$ converges uniformly.
+\end{thm}
+\begin{proof}
+    Prove that the sequence of partial sums is uniformly Cauchy.
+\end{proof}
+\begin{prop}[Properties of power series]
+    Let $\sum a_nx^n$ be a complex power seires with radius of convergence $R$. Define $f:x\mapsto \sum a_nx^n$. Then
+    \begin{enumerate}
+        \item $f$ is cts
+        \item $f$ is integrable term-by-term
+        \item $f$ is differentiable and for all $x\in D(0,R)$, the derivative $f'(x)$ is given by term-by-term differentiation.
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    Weierstrass M-test for local uniform convergence, then the rest follows.
+\end{proof}
+\begin{thm}[Dini's theorem]
+    Let $X$ be a compact metric space and $(f_n)$ a sequence of continuous real valued functions on $X$ which is decreasing. If $f_n\to f$ pointwise to a cts function $f$, then the convergence is uniform.
+\end{thm}
+\begin{thm}[Arzela-Ascoli (non-examinable but useful)]
+    s
+\end{thm}
+
+\section{Metric space}
+\begin{defn}
+    Completeness: every cauchy sequence converges within the space.\\
+    Sequential compactness: every sequence has a convergent subsequence that converges in the set.\\
+    Total boundedness:
+    For all $\epsilon>0$, there exists finite $A\subseteq X$ s.t. $\forall x\in X$, $\exists a\in A$, $d(x,a)<\epsilon$. (For any $\epsilon>0$, $X$ can be covered by a finite collection of open $\epsilon$-balls centered in $X$.)
+\end{defn}
+\begin{prop}
+    (Metric space) $\epsilon-\delta$ continuity $\Leftrightarrow$ ``open sets''/Nbd continuity. 
+\end{prop}
+\begin{proof}
+$f:X\to Y$.
+
+    First show that continuity at $a$ is equivalent to $f^{-1}(N)$ being a nbd of $a$ for all nbd $N$ of $f(a)$.
+
+    Use this to show that if $G$ is open in $Y$ then $G$ is a nbd of every point $y\in G$. Use nbd continuity. Conversely, definition chasing.
+\end{proof}
+\begin{thm}[Contraction mapping theorem]
+    Let $(X,d)$ be a non-empty, complete, metric space. If $f:X\to X$ is a contraction (i.e., there exists $K<1$ s.t. $d(f(x_1),f(x_2))\le Kd(x_1,x_2)$ for all $x_1,x_2\in X$), then $f$ has a unique fixed point in $X$.
+\end{thm}
+\begin{proof}
+    $X\neq\varnothing$, so take $x_0\in X$. Construct a sequence recursively by $x_{n+1}=f(x_n)$, then if $\Delta=d(x_0,x_1)$, we must have $d(x_n,x_{n+1})\le K^n\Delta$. So, for $N\le m<n$
+    \[d(x_n,x_m)\le\sum_{i=m}^nd(x_i,x_{i+1})\le \Delta\sum_{i=m}^n K^i\le \dfrac{K^N\Delta}{1-K}\to 0\] as $N\to\infty$, so $(x_n)_{n\ge 0}$ is a Cauchy sequence, which converges in $X$ by completeness. Let $x=\lim_{n}x_n$, then $f(x)=x$ by uniqueness of limit.
+    If there is another fixed point $y$, then $d(x,y)=d(f(x),f(y))\le Kd(f(x),f(y))$, so the only way this holds is $d(x,y)=0$ so $x=y$.
+\end{proof}
+\begin{prop}
+    $l^p$ is complete. (c.f. Kolmogorov, Introductory Real Analysis)
+\end{prop}
+\begin{proof}
+    $l^p$ is the space of sequences $(x_n)$ s.t $\sum |x_n|^p<\infty$. Metric is given by $d(x,y)=(\sum|x_n-y_n|^p)^{1/p}$.
+    Given a Cauchy sequence $(x^{(n)})_{n\in\NN}$, we see that each coordinates must be a Cauchy sequence in $\RR$, so we have a pointwise limit $x$. For all $M$, we have the partial sum $\sum_{k=1}^M|x_k^{(n)}-x_{k}^{(m)}|^p<\epsilon$ for sufficiently large $m,n$, Let $m\to\infty$, and then let $M\to\infty$, we get $\sum_{k=1}^\infty|x_k^{(n)}-x_k|^p\le\epsilon$, then use Minkowski's inequality ($p=2$ reduces to Cauchy-Schwarz) to conclude that the convergence of $\sum |x_k^{(n)}|^p$ and $\sum |x_k^{(n)}-x_k|$ implies the convergence of $\sum|x_k|^p$. So the pointwise limit is in $l^p$.
+    Then we can invoke metric notation and deduce completeness.
+\end{proof}
+\begin{lem}
+    $U\subseteq \RR^n$ closed and bounded, $V\subseteq \RR^m$ closed, then $C(U,V)$ (equipped with the uniform metric) is complete
+\end{lem}
+\begin{proof}
+    Take a Cauchy sequence, then this sequence of (cts) functions is uniformly Cauchy, hence uniformly converges to a cts function. Note that $V$ is closed, so the image of the limit function lies in $V$.
+\end{proof}
+\begin{thm}[Picard-Lindelöf]
+    Let $a,b\in\RR$ with $a<b$. Let $t_0\in(a,b)$. Let $y_0\in\RR^n$. Let $\phi:[a,b]\times \overline{B_\delta(y_0)}\to \RR^n$ be continuous, and s.t. $\exists K>0$ s.t. $\forall t\in[0,1]$ and $\forall x,y\in \overline{B_\delta(y_0)}$, $\Vert \phi(t,x)-\phi(t,y)\Vert\le K\Vert x-y \Vert$.
+    Then, there exists $\epsilon>0$ s.t. the IVP $f'(t)=\phi(t,f(t)), f(t_0)=y_0$ has a unique solution on $[t_0-\epsilon,t_0+\epsilon]\subseteq[a,b]$.
+\end{thm}
+\begin{proof}
+    Consider the operator $T:C([t_0-\epsilon,t_0+\epsilon], \overline{B_\delta(y_0)})\to ?$ (uniform metric assumed) defined by
+    \[T(f)=y_0+\int_{t_0}^x\phi(t,f(t))dt\]
+    We want $T$ to be a self map, i.e., $\operatorname{im}(Tf)\subseteq \overline{B_\delta(y_0)}$, so consider
+    \[\Vert T(f)-y_0\Vert\le \int_{t_0}^x\Vert \phi(t,f(t))\Vert dt\le M|x-t_0|\le M\epsilon\le \delta\]
+    So we choose $\epsilon\le \delta/M$, where $M$ is the bound of $\phi$ on this compact interval. Now, consider
+    \[\Vert T(f),T(g)\Vert \le \int_{t_0}^x\Vert \phi(t,f(t))-\phi(t,g(t))\Vert dt\le \int_{t_0}^x K\Vert f(t)-g(t)\Vert dt\le K|x-t_0|d(f,g)\le K\epsilon d(f,g)\]
+    Choose $\epsilon$ small enough so that $K\epsilon<1$, then we have a contraction mapping. Use Lemma 2.4 and CMT to deduce the existence of a unique fixed pt. By FTC, the unique fixed point is precisely the solution to the IVP.
+\end{proof}
+\begin{thm}[Improved version of Picard-Lindelöf (Sheet 2 Q9)]
+    
+\end{thm}
+\begin{thm}
+    Let $(X,d)$ be a metric space. TFAE,
+    \begin{itemize}
+        \item $(X,d)$ is compact;
+        \item $(X,d)$ is sequentially compact;
+        \item $(X,d)$ is complete and totally bounded.
+    \end{itemize}
+    If $X\subseteq\RR^n$ (equipped with Euclidean metric), then 
+    \begin{itemize}
+        \item $(X,d)$ is closed and bounded.
+    \end{itemize}
+\end{thm}
+\begin{proof}
+    Sequential compactness $\Leftrightarrow$ complete and totally bounded:\\
+    $\Rightarrow:$ Suppose not complete but sequentially compact, then have a cauchy sequence which doesn't converge in $X$, but it has a subsequence which converges in $X$, so the sequence converges in $X$. Contradiction. Suppose not totally bounded, then 
+    \[\exists \epsilon \forall A\subseteq X \text{ finite }, \exists x\in X \forall a\in A, d(x,a)\ge \epsilon\]
+    Pick $x_1\in X$, and recursively let $A_n=\{x_1,\ldots,x_n\}$, then can pick $x_{n+1}$ s.t. $d(x_i,x_{n+1})\ge\epsilon$ for all $i\le n$. This gives a sequence s.t. for all $i,j\in\NN$ $i\neq j\Rightarrow d(x_i,x_j)\ge \epsilon$, so it has no convergent subsequence.\\
+    $\Leftarrow:$ (Similar to a bisection proof) Suppose complete and totally bounded. Let $(x_n)$ be a sequence in $X$. Can find $A_1$ finite such that all $X\subseteq \bigcup_{a\in A_1}B_{1/2}(a)$. So there exists $a_1\in A_1$ s.t. $d(x_n,a_1)<1/2$ infinitely often, so pick a subsequence $(x_{n_{1,j}})_{j\in\NN}$. Keep going and for each $k\in\NN$, can find subsequence $(x_{n_{2,j}})$ of $(x_{n_{1,j}})$ such that they all lie in $B_{1/4}(a_2)$. Repeat this process. Obtain a bunch of sequences. Use diagonalization to get a Cauchy sequence, which converges in $X$ by completeness, so $X$ is sequentially compact.
+
+    Compactness $\Leftrightarrow$ sequential compactness:
+    $\Rightarrow:$ If compact but not sequentially compact, then find a sequence $(x_n)$ with no convergent subsequence. Then, for all $a\in X$, there exists $G_a$ open which contains only finitely many $x_n$ (Otherwise we would have a convergent subsequence). $\bigcup_{a\in X}G_a$ gives an open cover, which reduces to a finite subcover, but then $X$ can only contain finitely many $x_n$, contradiction.\\
+    $\Leftarrow:$ Want to use total boundedness to find a finite subcover. Let $C$ be an open cover of $X$. Claim: 
+    \[\exists\delta>0,\forall a\in X,\exists G\in C: B_\delta(a)\subseteq G\]
+    If not then for all $n\in\NN$, there exists $x_n\in X$ witht the property that $\forall G\in C$, $B_{1/n}(x_n)\not\subseteq G$. Sequential compactness gives a convergent subsequence. Let $x$ be the limit, then $x\in G_0\in C$, meaning that $B_{\epsilon}(x)\subseteq G_0$, but then can go sufficiently far down the subsequence so that everyone lies in $B_{\epsilon}(x)$ and $1/n<\epsilon$. Contradiction. So such $\delta$ exists. By total boundedness (implied by sequential compactness) can cover $X$ by a finite collection of $\delta$-balls, so can take finitely many $G\in C$ to cover $X$, which is a finite subcover of $C$.
+
+    For subsets of Euclidean spaces. If closed and bounded, then Bolzano-Weierstrass implies that $X$ is sequentially compact. Conversely, if not closed then find a convergent sequence that doesn't converge in $X$, then it can't have subsequences converging in $X$ by uniqueness of limit. If not bounded, then obviously have unbounded sequence which has no convergent subsequence.
+\end{proof}
+\begin{crly}[Heine-Borel]
+    A subsets of Euclidean space is compact iff it's closed and bounded.
+    [This implies that $[0,1]$ (usual metric) is compact.]
+\end{crly}
+\begin{proof}
+    
+\end{proof}
+\begin{prop}
+    Compact metric spaces are complete.
+\end{prop}
+\begin{proof}
+    Compact implies sequentially compact, so any cauchy sequence has a convergent subsequence, then the whole sequence must converge.
+\end{proof}
+\begin{thm}
+    Continuous functions on a compact metric space is uniformly continuous
+\end{thm}
+\begin{proof}
+    For each point in $x\in K$, $\exists \delta_x>0$ s.t. $\epsilon$-$\delta$ condition holds. Take union of $\delta_x$-balls (open cover). Pass to a finite subcover.
+\end{proof}
+\begin{thm}
+Let $(X,d)$ be a sequentially compact metric space, and $f:X\to X$ isometry, then $f$ is bijective.    
+\end{thm}
+\begin{proof}
+    Injectivity is trivial. Assume $y\not\in f(X)$, then by sequential compactness and continuity, $\exists\epsilon>0$ s.t. $d(f(x),y)\ge\epsilon$. Let $x_0=x$ and define $x_{n+1}=f(x_n)$, we have for $i<j$, $d(x_i,x_j)=d(x_0,x_{j-i})\ge \epsilon$, so $(x_i)$ has no convergent subsequences, contradicting sequential comapctness.
+\end{proof}
+\section{Topology}
+\begin{prop}
+    Open set continuity (Continuity) $\implies$ sequential continuity. (The converse is false even for Hausdorff space)
+\end{prop}
+\begin{prop}
+    $[0,1]$ is connected.
+\end{prop}
+\begin{proof}
+(IVT banned)
+    Suppose not, then have $U,V\subseteq [0,1]$ disjoint open subsets s.t. $U\cup V=[0,1]$. WLOG, $1\in V$. Let $\eta=\sup U$. Have $\eta\neq0,1$ otherwise $U=\{0\}$ is not open or $1$ is not an interior point of $V$.
+    
+    Suppose $0<\eta<1$, then if $\eta\in U$, then get contradiction as there is an open nbd of $\eta$ in $U$. If $\eta\in V$, then the same argument (go downward instead of upward) gives a contradiction. So $[0,1]$ is connected.
+\end{proof}
+\begin{proof}
+    (IVT not banned). Map an open set to $0$ and the other to $1$, get a cts function, IVT implies that it must hit $1/2$ somewhere, contradiction.
+\end{proof}
+\begin{prop}
+    Path-connectedness implies connectedness. For subsets of $\RR^n$ with the Euclidean topology, connectedness implies path-connectedness. 
+\end{prop}
+\begin{thm}
+    Image of connected (resp. compact) sets under continuous functions are connected (resp. compact).
+\end{thm}
+\begin{thm}
+    Continuous real-valued function on sequentially compact sets is bounded and attains its bound.
+\end{thm}
+\begin{crly}
+    $(X,d)$ metric space and $K\subseteq X$ sequentially compact, then for all $x\in X\setminus K$, there exists $\epsilon>0$ s.t. for all $y\in K$, $d(x,y)\ge\epsilon$ and $\exists z\in K$ s.t. $d(x,z)=\epsilon$
+\end{crly}
+\begin{proof}
+    Consider $y\mapsto d(x,y)$.
+\end{proof}
+\begin{prop}
+    Finite Cartesian product of connected (resp. compact) sets are connected (resp. compact).
+\end{prop}
+\begin{proof}
+    
+\end{proof}
+\begin{thm}
+    Intersection of nested sequence of closed   comapct sets is non-empty.
+\end{thm}
+\begin{proof}
+    (c.f. Sheet 3)
+\end{proof}
+\begin{lem}
+    Closed subset of compact space is compact; compact subset of Hausdorff space is closed. 
+\end{lem}
+\begin{proof}
+    $K$ compact. $X\subseteq K$ closed. $X\setminus K$ open Take an open cover of $X$, then by adjoining $X\setminus K$ if necessary, we get an open cover of $K$, which has a finite subcover, then remove $X\setminus K$ if necessary, we get a finite subcover of $X$.
+
+    $Y$ Hausdorff, $X\subseteq Y$ compact. Pick $y\in Y\setminus X$, then for each $x\in X$ there exists nbd $U_x, V_y$ s.t. $U_x\cap V_y=0$, $\{U_x\}$ is an open cover of $X$, so pass to a finite subcover, then construct $V\subseteq Y\setminus X$ by taking intersection, so $Y\setminus X$ is open.
+\end{proof}
+\begin{thm}[Topological inverse function theorem]
+    A continuous bijection from a compact space to a Hausdorff space is a homeomorphism.
+\end{thm}
+\begin{proof}
+    It suffices to prove that this is a closed map. Given a closed set in the domain, then it's compact, its image is a compact subset of Hausdorff space, hence closed.
+\end{proof}
+\begin{thm}[Universal property of quotient topology]
+Let $(X,\tau)$ be a top. space and $\sim$ an equiv. relation on $X$. Let $q:X\to X/{\sim}$ be the quotient map and let $f:X\to Y$ be a cts function respecting $\sim$, then $\exists !$ $\tilde f$ cts s.t. $f=\tilde{f}\circ q$. [$X/{\sim}$ is equipped with the quotient topology.]    
+\end{thm}
+\begin{proof}
+    First prove that there is a well-defined $\tilde{f}$, and it is clearly unique by commutativity requirement. Then use definition of quotient topology to prove continuity. Pullback an open set $G\subseteq Y$ via $(q\circ \tilde{f})$ get an open set in $X$ by continuity of $f$. Quotient topology says $\tilde{f}^{-1}(G)$ is open in the quotient iff $q^{-1}\tilde{f}^{-1}(G)$ is open in $X$ which is true by continuity of $f$.
+\end{proof}
+
+\subsection{Equivalence of topologies}
+
+\section{Multivariate differentiation}
+\begin{prop}[Operator norm]
+    $\alpha\in L(\RR^n,\RR^m)$, define $\Vert\alpha\Vert=\sup\{\Vert\alpha(x)\Vert:\Vert x\Vert=1\}$.
+    \begin{itemize}
+        \item $\Vert\alpha\Vert\ge 0$ with equality iff $\alpha=0$
+        \item $\Vert\lambda\alpha\Vert=\vert\lambda\vert\Vert\alpha\Vert$ for scalars $\lambda$
+        \item $\Vert\alpha+\beta\Vert\le\Vert\alpha\Vert+\Vert\beta\Vert$.
+        \item $\Vert\alpha(x)\Vert\le\Vert\alpha\Vert\Vert x\Vert$
+        \item If $\gamma\in L(\RR^m,\RR^k)$, then $\Vert\gamma\circ\alpha\Vert\le\Vert\alpha\Vert\Vert\beta\Vert$
+    \end{itemize}
+\end{prop}
+\begin{prop}
+    ``Equivalence'' of Operator norm and Euclidean norm
+\end{prop}
+\begin{proof}
+    Bound by some obvious inequalities.
+\end{proof}
+\begin{prop}[Chain rule]
+    Let $U\subseteq \RR^m$, $V\subseteq \RR^n$. If $f:U\to\RR^n$, $g:V\to \RR^k$, and $f(U)\subseteq V$ and $f$ is diff at $a\in U$, $g$ is diff at $f(a)$, then $g\circ f$ is differentiable at $a$ and $D(g\circ f)|_a=Dg|_{f(a)}\circ Df|_a$.
+\end{prop}
+\begin{proof}
+    Algebra bash. Write $b=f(a)$ and
+    \[\begin{cases}
+        f(a+h)=f(a)+S(h)+\epsilon(h)\Vert h\Vert\\
+        g(b+k)=g(b)+T(k)+\delta(k)\Vert k\Vert \\
+    \end{cases}\]
+    So
+    \[g(f(a+h))=g(b+S(h)+\epsilon(h)\Vert h\Vert)\]
+    Expand. will get two terms. One of them is $o(\Vert h\Vert)$ by direct computation (divide by norm $h$, goes to zero) The other term goes to zero by estimating using operator norm.
+\end{proof}
+
+\begin{thm}
+    If all partial derivatives exist and are continuous in a nbd of a point, then $f$ is differentiable.
+\end{thm}
+\begin{proof}
+    WLOG, $m=1$ (looking at each coordiante separately). For general $n$ apply MVT multiple times.
+\end{proof}
+\begin{rem}
+    In fact, we only require $n-1$ partial derivatives to be continuous in a nbd of that point.
+\end{rem}
+\begin{thm}[Mean value inequality]
+    Let $f:\RR^n\to\RR^m$ and let $a,b\in\RR^n$. Suppose $f$ is diferentiable at $z$ for all $z\in[a,b]=\{a+t(b-a):t\in[0,1]\}$. Then,
+    \[\Vert f(b)-f(a)\Vert\le\Vert b-a\Vert\sup_{z\in[a,b]}\Vert Df|_z\Vert\]
+\end{thm}
+\begin{proof}
+Define $F:[0,1]\to\RR$ by \[F(t)=f(a+t(b-a))\cdot(f(b)-f(a))\]
+Notice that $F(1)-F(0)=\Vert f(b)-f(a)\Vert^2$. $F$ is differentiable with $$DF|_t(h)=(f(b)-f(a))\cdot Df|_{a+t(b-a)}(h(b-a))$$ (chain rule), so $F'(t)=(f(b)-f(a))\cdot Df|_{a+t(b-a)}(b-a)$. We apply MVT to conclude that $|F(1)-F(0)|=|F'(\xi)|$ for some $\xi\in(0,1)$, so
+\begin{align*}
+    \Vert f(b)-f(a)\Vert^2&=|F(1)-F(0)|\\
+    &=|F'(\xi)|\\
+    &\le \Vert f(b)-f(a)\Vert \Vert Df|_{a+\xi(b-a)}(b-a)\Vert\\
+    &\le \Vert f(b)-f(a)\Vert \Vert Df|_{a+\xi(b-a)}\Vert\Vert b-a\Vert\\
+    &\le \Vert f(b)-f(a)\Vert \Vert b-a\Vert\sup_{z\in[a,b]}\Vert Df|_z\Vert
+\end{align*}
+where we have used Cauchy-Schwarz and properties of operator norm.
+\end{proof}
+\begin{crly}
+    Let $f:\RR^n\to\RR^m$ and let $G\subseteq\RR^n$ be open and connected. Suppose for all $z\in G$, $f$ is differentiable at $z$ with $Df|_z$ being the zero map. Then $f$ is constant on $G$.
+\end{crly}
+\begin{thm}[Symmetry of mixed partial derivatives]
+Suppose $f:\RR^n\to\RR^m$ and $z\in\RR^n$. If $D_iD_jf$ and $D_jD_if$ exists and cts in a nbd of $z$ and are cts at $z$, then $D_iD_jf=D_jD_if$.
+\end{thm}
+\begin{proof}
+    WLOG, $n=2$, $m=1$. Consider $\Delta_h=f(x+h,y+h)-f(x+h,y)-(f(x,y+h)-f(x,y))$.
+    Use differentiability on each bracket and apply MVT. By similar argument can deduce two formula of $\Delta_h$ in terms of mixed partial. Let $h\to 0$.
+\end{proof}
+\begin{thm}[Second order Taylor's theorem]
+    Let $f:\RR^n\to\RR^m$ be twice differentiable, then
+    \[f(a+h)=f(a)+Df|_a(h)+\dfrac{1}{2}D^2f|_a(h,h)+o(\Vert h\Vert)^2\]
+\end{thm}
+\begin{proof}
+    WLOG, $m=1$. Define
+    \[\varphi_h(t)=f(a+th)-f(a)-tDf|_a(h)+\dfrac{t^2}{2}D^2f|_a(h,h)\]
+    Note that $\varphi_h(1)-\varphi_h(0)$ is the expression we want.
+    Want to prove that this difference is $o(\Vert h\Vert^2)$, so apply MVT and use the definition of second derivative to manipulate.
+\end{proof}
+\begin{thm}[Inverse function theorem]
+    Let $f:\RR^n\to\RR^n$, $a\in\RR^n$, and $b=f(a)$. Suppose there exists ome open nbd $A$ of $a$ s.t. $f$ is continuouslu differentiable at every $x\in A$ and $Df|_a$ is non-singular. Then there are open nbd $U$ of $a$ and $V$ of $b$ s.t. $f|_U:U\to V$ is a homeomorphism. Moreover, if $g:V\to U$ is the inverse, then $g$ is continuously differentiable at all $y\in V$ with $Dg|_y=(Df|_x)^{-1}$, where $y=f(x)$.
+\end{thm}
+\begin{proof}
+    Step 0: Let $A=Df|_a$. For each $y\in\RR^n$ define $\varphi_y(x)=x+A^{-1}(y-f(x))$.
+    Can find $\lambda>0$ s.t. $2\lambda\Vert A^{-1}\Vert=1$. By continuity of derivative, can find an open ball $U$ about $a$ s.t. $\Vert A-Df|_x\Vert<\lambda$ for all $x\in U$. 
+
+    Step 1: For each $y_0=f(x_0)\in f(U)$, there exists $\delta>0$ and $\eta>0$ s.t. for all $y\in B_{\eta}(y_0)$, $\varphi_y|_{\overline{B_{\delta}(x_0)}}$ is a contraction mapping. First, note that on $U$, $D\varphi_y|_x=I-A^{-1}\circ Df|_x=A^{-1}(A-Df|_x)$. The norm of this thing is $\le \lambda(1/2\lambda)=1/2$ on $U$, so by mean value inequality, we have (for all $x_1,x_2\in U$)
+    \[\Vert\varphi_y(x_1)-\varphi_y(x_2)\Vert\le \dfrac{1}{2}\Vert x_2-x_1\Vert\] This implies that $\varphi_y$ can have at most one fixed point in $U$, i.e., $f(x)=y$ has at most one solution for $x$ in $U$.
+    Second, pick $\delta>0$ s.t. $\overline{B_\delta(x_0)}\subseteq U$, and let $\eta=\lambda \delta$. 
+    Now, for $x\in \overline{B_\delta(x_0)}$ and $y\in B_{\lambda\delta}(y_0)$,
+    \begin{align*}\Vert\varphi_y(x)-x_0\Vert&\le \Vert\varphi_y(x)-\varphi_y(x_0)\Vert+\Vert\varphi_y(x_0)-x_0\Vert\\
+    &\le \dfrac{1}{2}\Vert x-x_0\Vert+\Vert A^{-1}\Vert \Vert y-y_0\Vert\le \dfrac{\delta}{2}+\dfrac{\lambda \delta}{2\lambda}=\delta
+    \end{align*}
+    Contraction mapping theorem then implies that there exists a unique $x\in \overline{B_\delta(x_0)}$ s.t. $f(x)=y$. Also, we see that if $y_0\in f(U)$, then $B_{\lambda\delta}(y_0)\subseteq f(U)$, i.e., $f(U)$ is open. This shows that $f|_U:U\to f(U)$ is a continuous bijection from open set $U$ to open set $f(U)$.
+
+    Step 3: Let $g=(f|_U)^{-1}$. We wish to show that $g$ is continuous. Let $y_1=f(x_1)$, $y_2=f(x_2)$ for some $x_1,x_2\in U$.
+    Note that for $y\in\RR^n$
+    \begin{align*}
+        \dfrac{1}{2}\Vert x_1-x_2\Vert\ge\Vert\varphi_y(x_1)-\varphi(x_2)\Vert=\Vert x_1-x_2+A^{-1}(y_2-y_1)\Vert\ge\Vert x_1-x_2\Vert-\Vert A^{-1}(y_2-y_1)\Vert
+    \end{align*}
+    Rearranging, get
+    \begin{align*}
+        \Vert g(y_1)-g(y_2)\Vert=\Vert x_1-x_2\Vert\le 2\Vert A^{-1}(y_2-y_1)\Vert\le2\Vert A^{-1}\Vert\Vert y_1-y_2\Vert
+    \end{align*}
+    So $g$ is continuous
+\end{proof}
+\section{Useful estimates/inequalities}
+\begin{itemize}
+    \item $e^x\ge x^n/n!$ for $x>0$
+\end{itemize}
+\section{Counterexamples}
+\begin{example}[Pointwise limit of cts func being discontinuous]
+    $f_n(x)=x^n$ on $[0,1]$ OR $f_n(x)=(1-x^2)^n$ on $[-1,1]$
+\end{example}
+\begin{example}[Limit of integral != integral of ptwise limit]
+    Increasing spike.
+\end{example}
+\begin{example}[Uniform limit of differentiable functions being non-differentiable]
+    $f_n(x)=\sqrt{x^2+1/n}$ on $[-1,1]$
+\end{example}
+\begin{example}Uniform limit of differentiable functions being differentiable but the limit is incorrect
+    $f_n(x)=\dfrac{x}{1+nx^2}$, then $\lim f_n'(x)=f'(x)$ is true iff $x\neq 0$.
+\end{example}
+
+\begin{example}[bounded but not totally bounded]
+    Closed unit ball in $l^2$.
+\end{example}
+
+\begin{example}[Function on a Hausdorff space which preserve limits but is discontinuous]
+    
+\end{example}
+
+\begin{example}[Connected but not path-connected]
+    $X=\{(x,\sin(1/x)):x\in(0,1]\}\cup \{(0,y):y\in[0,1]\}$.
+\end{example}
+
+
+\end{document}

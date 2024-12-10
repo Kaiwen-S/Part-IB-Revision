@@ -1,0 +1,243 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{enumerate,bbm}
+\usepackage{tikz,graphicx,color,mathrsfs,color,hyperref}
+\usepackage{caption,float}
+\usepackage[a4paper,margin=1in,footskip=0.25in]{geometry}
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+\usepackage{tabularx,capt-of}
+
+\usepackage{blindtext}
+%Image-related packages
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage[export]{adjustbox}
+\usepackage{lipsum}
+
+%hyperref setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
+
+%New colors defined below
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+%Code listing style named "mystyle"
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{backcolour}, commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=left,                    
+  numbersep=5pt,                  
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2
+}
+
+%"mystyle" code listing set
+\lstset{style=mystyle}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}[section]
+\theoremstyle{remark}
+\newtheorem{rem}{Remark}
+\newtheorem{remS}[section]{defn}
+\newtheorem{lem}[defn]{Lemma}
+\theoremstyle{plain}
+\newtheorem{thm}[defn]{Theorem}
+\newtheorem{prop}[defn]{Proposition}
+\newtheorem{fact}[defn]{Fact}
+\newtheorem{crly}[defn]{Corollary}
+\newtheorem{conj}[defn]{Conjecture}
+\newtheorem{example}{Example}
+\theoremstyle{definition}
+%\newtheorem*{programming*}{Programming Task}
+
+%\newtheorem{innercustomgeneric}{\customgenericname}
+%\providecommand{\customgenericname}{}
+%\newcommand{\newcustomtheorem}[2]{%
+%  \newenvironment{#1}[1]
+%  {%
+%   \renewcommand\customgenericname{#2}%
+%   \renewcommand\theinnercustomgeneric{##1}%
+%   \innercustomgeneric
+%  }
+%  {\endinnercustomgeneric}
+%}
+
+%\newcustomtheorem{question}{Question}
+%\newcustomtheorem{programming}{Programming Task}
+
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\PP}{\mathbb{P}}
+
+\newcommand{\calD}{\mathcal{D}}
+
+\title{Methods}
+\author{ }
+\date{ }
+
+\begin{document}
+\maketitle
+\section{Fourier stuff}
+Fourier series for $L$-periodic functions
+\begin{align*}
+    f(x)\sim \sum_{n=-\infty}^\infty c_n e^{i2\pi n x/L}=\dfrac{1}{2}a_0+\sum_{n=1}^\infty a_n\cos(2\pi nx/L)+\sum_{n=0}^\infty b_n\sin(2\pi nx/L)
+\end{align*}
+where 
+\begin{align*}
+    &c_n=\dfrac{1}{L}\int_0^L f(x)e^{i2\pi nx/L}dx\\
+    &a_n=\dfrac{2}{L}\int_0^L f(x)\cos(2\pi nx/L)dx\\
+    &b_n=\dfrac{2}{L}\int_0^L f(x)\sin(2\pi nx/L)dx
+\end{align*}
+Fourier sin/cos series for odd/even extension. $f:[0,L)\to\CC$, then have odd/even periodic extension.
+\begin{align*}
+    &f_{\text{odd}}(x)\sim \sum_{n=0}^\infty b_n\sin(n\pi x/L)\\
+    &f_{\text{even}}(x)\sim\dfrac{1}{2}a_0+\sum_{n=1}^\infty a_n\cos(n\pi x/L)
+\end{align*}
+where
+\[a_n=\dfrac{2}{L}\int_0^{L}f(x)\cos(n\pi x/L)dx,\ b_n=\dfrac{2}{L}\int_0^L f(x)\sin(n\pi x/L)\]
+Fourier transform of $f:\RR\to\CC$
+\[\hat f(\lambda)=\int_{-\infty}^\infty f(x)e^{-i\lambda x}dx\]
+(Easily generalizes to multivariable case.)
+Inverse transform
+\[f(x)=\dfrac{1}{2\pi}\int_{-\infty}^\infty \hat f(\lambda)e^{i\lambda x}d\lambda\]
+\begin{thm}[Parseval]
+    Let $f\sim\sum \hat f_ne^{i2\pi nx/L}$ $g\sim \sum\hat g_ne^{i2\pi nx/L}$, then
+    \[\dfrac{1}{L}\langle f,g\rangle=\dfrac{1}{L}\int_0^Lf(x)\overline{g(x)}dx=\sum \hat f_n\overline{\hat g_n}\]
+    In terms of real fourier series coeff, 
+    \[=\dfrac{1}{2}a_0^2+\sum_{n=1}^\infty (a_n^2+b_n^2)\]
+    For Fourier transform, have
+    \[\int_{-\infty}^\infty f(x)g(x)dx=\dfrac{1}{2\pi}\int_{-\infty}^\infty \hat f(\lambda) \hat g(\lambda)d\lambda\]
+\end{thm}
+\begin{prop}[Properties of Fourier transform]
+    \begin{itemize}
+        \item Fourier transform of $f^{(k)}$ = $(i\lambda)^k$ times $\hat f$. Fourier transform of $x^k f(x)$ = $i^k$ times the kth derivative of $\hat f$.
+        \item Fourier transform of $f(x-a)$ = $e^{-i\lambda a}$. Fourier transform of $e^{iax}f(x)$ = $\hat f(x+a)$.
+        \item Fourier transform of convolution is the product of Fourier transforms of each individual function.
+    \end{itemize}
+\end{prop}
+
+\section{Sturm-Liouville stuff}
+\begin{prop}
+    Self-adjointness.
+\end{prop}
+\begin{proof}
+\end{proof}
+Reduction to Sturm-Liouville form
+\[\mathcal{L}=\dfrac{1}{w}\left[\dfrac{d}{dx}\left(-p\dfrac{d}{dx}\right)+q\right]\]
+Given
+\[\alpha(x)\dfrac{d^2}{dx^2}+\beta(x)\dfrac{d}{dx}+\gamma(x)y\]
+Then, can reduce to Sturm-Liouville form by first setting $I(x)=\exp(\int \beta/\alpha)$ (integrating factor)
+\begin{align*}
+    p=I(x),\ q=-\dfrac{\gamma(x)I(x)}{\alpha(x)}, \ w(x)=\dfrac{I(x)}{\alpha(x)}
+\end{align*}
+$w$ is called the weight function. Eigenfunctions of $\mathcal{L}$ are orthogonal under the inner product $\langle f,g\rangle_w=\int_a^b f\bar{g}wdx$ (complex conjugate can be omitted if working over $\RR$)
+\subsection{Important examples}
+\begin{example}[Legendre polynomials]
+    
+\end{example}
+\begin{example}[Hermite polynomials]
+    
+\end{example}
+\begin{example}[Bessel's functions]
+    
+\end{example}
+\section{Green's function}
+Let $L=\alpha(x) d^2/dx^2+\beta(x)d/dx+\gamma(x)$ be a second order differential operator, $f$ some functions on $[a,b]$
+\begin{align*}
+    \begin{cases}
+        Ly=f\\
+        y(a)=0\\
+        y(b)=0
+    \end{cases}
+\end{align*}
+Green's function is given by
+\begin{align*}
+    G(x;\xi)=\dfrac{1}{\alpha(\xi)W(y_1,y_2)(\xi)}\begin{cases}
+        y_1(x)y_2(\xi) & a<x<\xi\\
+        y_1(\xi)y_2(x) & \xi<x<b
+    \end{cases}
+\end{align*}
+where $y_1$ and $y_2$ are linearly indep solns of $Ly=0$ s.t. $y_1(a)=0$ and $y_2(b)=0$. Note that the jump discontinuity of $G'(x;\xi)$ is given by $1/(\alpha(\xi))$.
+Then the solution to the inhomogeneous problem is given by
+\begin{align*}
+    y(x)=y_2(x)\int_a^x\dfrac{y_1(\xi)f(\xi)}{\alpha(\xi)W(y_1,y_2)(\xi)}d\xi+ y_1(x)\int_x^b\dfrac{y_2(\xi)f(\xi)}{\alpha(\xi)W(y_1,y_2)(\xi)}d\xi
+\end{align*}
+Similar situation applies to initial value problem (jump discontinuity given similarly). General solution for IVP is
+\begin{align*}
+    y(t)=\int_0^\infty G(t;\tau)f(\tau)d\tau=\int_0^tG(t;\tau)f(\tau)d\tau
+\end{align*}
+\section{PDEs}
+\subsection{Methods of characteristics}
+Consider quasi-linear PDEs of the form
+\[a(x,y)\dfrac{\partial u}{\partial x}+b(x,y)\dfrac{\partial u}{\partial y}=c(x,y,u)\]
+Characteristic curves are given by solving
+\[\begin{cases}
+    \dot x=a(x,y)\\
+    \dot y=b(x,y)
+\end{cases}\]
+Initial condition $(x(0),y(0))$ on a curve $C$ (depending on the initial condition of the PDE problem).
+Need to make sure that the vector field $(a,b)$ is nowhere parallel to the tangent of $C$ (non-characteristic condition).
+\subsection{Canonical forms}
+
+\subsection{Laplace equation}
+\subsubsection{Separation of variables}
+In spherical polar (axis-symmetric case), need to substitute $x=\cos(\theta)$ and use Legendre polynomials.
+\subsubsection{Fourier transform}
+Free space green's functions
+\begin{align*}
+    G({\bf x};{\bf y})=\begin{cases}
+        \dfrac{1}{2\pi}\log\vert{\bf x}-{\bf y}\vert & n=2\\
+        \dfrac{1}{(n-2)\operatorname{Area}(S^{n-1})}\dfrac{1}{\vert{\bf x}-{\bf y}\vert^{n-2}} & n\ge 3
+    \end{cases}
+\end{align*}
+Can construct Dirichlet green's function $\mathcal{G}({\bf x};{\bf y})$ by method of images.
+\subsection{Wave equation}
+\[\phi_{tt}-c^2\nabla^2\phi=0\]
+\subsubsection{Separation of variables}
+\subsubsection{Fourier transform}
+Important kernel:
+\[\hat\Phi_t(\vec\lambda)=\dfrac{\sin(c|\vec\lambda|t)}{c|\vec\lambda|}\]
+For $n=1$,
+\[\Phi_t(x)=\dfrac{1}{2c}H(x+ct)-\dfrac{1}{2c}H(x-ct)\]
+For $n=3$, (compute inverse transform using spherical polar)
+\[\Phi_t(\vec x)=\dfrac{1}{4\pi c|\vec x|}\delta(|\vec x|-ct)-\dfrac{1}{4\pi c|\vec x|}\delta(|\vec x|+ct)\]
+Take Fourier transform with respect to $x$ or $\vec x$ if in higher dimensions. Solve the homogeneous problem with non-trivial boundary condition. Then solve the inhomogeneous problem with Dirichlet boundary condition using Green's function, which is the same as $G(t;s)=\hat\Phi_{t-s}(\lambda)$. Then apply convolution theorem.
+
+On half line, simply consider the odd extension to the whole real line and apply the above.
+\subsection{Heat equation}
+\[u_t-\kappa\nabla^2 u=0\]
+\subsubsection{Separation of variables}
+\subsubsection{Fourier transform}
+Heat kernel
+\[K_t(\vec x)=\dfrac{1}{(4\pi\kappa t)^{n/2}}\exp\left(-\dfrac{|\vec x|^2}{4\kappa t}\right)\]
+and its Fourier transform (with respect to $\vec x$)
+\[\hat K_t(\vec\lambda)=\exp\left(-\kappa t|\vec\lambda|^2\right)\]
+Take Fourier transform wrt $\vec x$. Solve homogeneous problem with non-trivial boundary condition first. Then solve inhomogeneous problem with trivial boundary condition (first order system so use integrating factor). Superpose.
+
+\end{document}

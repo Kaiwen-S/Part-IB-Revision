@@ -1,0 +1,162 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{enumerate,bbm}
+\usepackage{tikz,graphicx,color,mathrsfs,color,hyperref}
+\usepackage{caption,float}
+\usepackage[a4paper,margin=1in,footskip=0.25in]{geometry}
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+\usepackage{tabularx,capt-of}
+
+\usepackage{blindtext}
+%Image-related packages
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage[export]{adjustbox}
+\usepackage{lipsum}
+
+%hyperref setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
+
+%New colors defined below
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+%Code listing style named "mystyle"
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{backcolour}, commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=left,                    
+  numbersep=5pt,                  
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2
+}
+
+%"mystyle" code listing set
+\lstset{style=mystyle}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}[section]
+\theoremstyle{remark}
+\newtheorem{rem}{Remark}
+\newtheorem{remS}[section]{defn}
+\newtheorem{lem}[defn]{Lemma}
+\theoremstyle{plain}
+\newtheorem{thm}[defn]{Theorem}
+\newtheorem{prop}[defn]{Proposition}
+\newtheorem{fact}[defn]{Fact}
+\newtheorem{crly}[defn]{Corollary}
+\newtheorem{conj}[defn]{Conjecture}
+\newtheorem{example}{Example}
+\theoremstyle{definition}
+%\newtheorem*{programming*}{Programming Task}
+
+%\newtheorem{innercustomgeneric}{\customgenericname}
+%\providecommand{\customgenericname}{}
+%\newcommand{\newcustomtheorem}[2]{%
+%  \newenvironment{#1}[1]
+%  {%
+%   \renewcommand\customgenericname{#2}%
+%   \renewcommand\theinnercustomgeneric{##1}%
+%   \innercustomgeneric
+%  }
+%  {\endinnercustomgeneric}
+%}
+
+%\newcustomtheorem{question}{Question}
+%\newcustomtheorem{programming}{Programming Task}
+
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\PP}{\mathbb{P}}
+
+\newcommand{\calD}{\mathcal{D}}
+
+\title{FD}
+\author{ }
+\date{ }
+
+\begin{document}
+\maketitle
+\section{Kinematics}
+Streamline
+\[\dfrac{d\vec x}{ds}=u(\vec x,t_0)\]
+Pathline
+\[\dfrac{d\vec x}{dt}=u(\vec x,t)\]
+Material derivative
+\[\dfrac{D}{Dt}=\dfrac{\partial}{\partial t}+\vec u\cdot \nabla\]
+Mass conservation
+\[\dfrac{\partial\rho}{\partial t}+\nabla\cdot(\rho\vec u)=0\]
+(If incompressible, then $\rho$ is constant and $\nabla\cdot \vec u$=0)\\
+Kinematic BC
+\[\vec U\cdot \vec n= \vec u\cdot \vec n\]
+(velocity of fluid in the normal direction = normal component of the velocity of the boundary, for stationary boundary, this is zero)\\
+Streamfunction for 2D incompressible flow
+\[(u,v)=(\dfrac{\partial\psi}{\partial y},-\dfrac{\partial\psi}{\partial x})\]
+\section{Inviscid flow}
+Momentum equation (differential from)
+\[\rho\dfrac{D\vec u}{Dt}=-\nabla p+\vec f\]
+(pressure gradient + external body force)\\
+Momentum equation (integral form)
+\[\dfrac{d}{dt}\int_V(\rho \vec u)dV=\int_{\partial V}-\rho (\vec u\cdot \vec n)\vec u dS +\int_{\partial V}-p\vec n dS+\int_V \vec f dV\]
+Dynamic BC (on the boundary of the volume)
+\[\tau=-p\vec n\]
+Steady Bernoulli (along streamlines)
+\[\dfrac{1}{2}\rho u^2+p+\chi=\text{const.}\]
+\section{Viscous flow (2D parallel)}
+i.e., $\vec u=(u(y,t),0,0)$
+
+Tangential shear stress (+side of normal to -side of normal)
+\[\tau_s=\mu\dfrac{\partial \vec u}{\partial \vec n}\]
+Equation for flow profile
+\[\begin{cases}
+\rho\dfrac{\partial u}{\partial t}=-\dfrac{\partial p}{\partial x}+\mu\dfrac{\partial^2 u}{\partial y^2}+f_x & \text{ force balance in }x\text{ direction}\\
+0=-\dfrac{\partial p}{\partial y}+f_y & \text{ force balance in }y\text{ direction}
+\end{cases}\]
+No-slip boundary condition
+\[\vec u=\vec U\]
+On free surface, assume no shear stress, i.e.
+\[\mu\dfrac{\partial \vec u}{\partial \vec n}=0\]
+\section{Vorticity}
+Vorticity
+\[\vec\omega=\nabla\times\vec u\]
+Vorticity equation
+\[\dfrac{D\vec\omega}{Dt}=(\vec\omega\cdot\nabla)\vec u\]
+\section{Inviscid irrotational flow}
+Potential $\phi$ satisfies Laplace's equation.\\
+Unsteady Bernoulli (independent of position)
+\[\rho\dfrac{\partial\phi}{\partial t}+\dfrac{1}{2}\rho u^2+p+\chi=f(t)\]
+
+\section{Geophysical flow}
+Shallow water wave equation
+\[\begin{cases}
+    \nabla^2\phi=0 & -h<z<\zeta(x,y,t)\\
+    
+\end{cases}\]
+\section{Derive equations...}
+\end{document}

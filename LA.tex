@@ -1,0 +1,348 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{enumerate,bbm}
+\usepackage{tikz,graphicx,color,mathrsfs,color,hyperref}
+\usepackage{caption,float}
+\usepackage[a4paper,margin=1in,footskip=0.25in]{geometry}
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+\usepackage{tabularx,capt-of}
+
+\usepackage{blindtext}
+%Image-related packages
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage[export]{adjustbox}
+\usepackage{lipsum}
+
+%hyperref setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
+
+%New colors defined below
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+%Code listing style named "mystyle"
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{backcolour}, commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=left,                    
+  numbersep=5pt,                  
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2
+}
+
+%"mystyle" code listing set
+\lstset{style=mystyle}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}[section]
+\theoremstyle{remark}
+\newtheorem{rem}{Remark}
+\newtheorem{remS}[section]{defn}
+\newtheorem{lem}[defn]{Lemma}
+\theoremstyle{plain}
+\newtheorem{thm}[defn]{Theorem}
+\newtheorem{prop}[defn]{Proposition}
+\newtheorem{fact}[defn]{Fact}
+\newtheorem{crly}[defn]{Corollary}
+\newtheorem{conj}[defn]{Conjecture}
+%\newtheorem*{programming*}{Programming Task}
+
+%\newtheorem{innercustomgeneric}{\customgenericname}
+%\providecommand{\customgenericname}{}
+%\newcommand{\newcustomtheorem}[2]{%
+%  \newenvironment{#1}[1]
+%  {%
+%   \renewcommand\customgenericname{#2}%
+%   \renewcommand\theinnercustomgeneric{##1}%
+%   \innercustomgeneric
+%  }
+%  {\endinnercustomgeneric}
+%}
+
+%\newcustomtheorem{question}{Question}
+%\newcustomtheorem{programming}{Programming Task}
+
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\PP}{\mathbb{P}}
+
+\newcommand{\calD}{\mathcal{D}}
+
+\title{LA}
+\author{ }
+\date{ }
+
+\begin{document}
+
+\maketitle
+
+\section{Basic stuff about vector spaces}
+\begin{lem}[Steinitz Exchange lemma]
+    Let $V$ be a vector space. Suppose $\{v_1,\ldots,v_m\}$ is a linearly independent set and $\{w_1,\ldots,w_n\}$ spans $V$, then
+    \begin{itemize}
+        \item $m\le n$
+        \item up to reordering, $\{v_1,\ldots,v_m,w_{m+1},\ldots,w_n\}$ spans $V$
+    \end{itemize}
+\end{lem}
+\begin{proof}
+    Proceed by induction. Suppose $\{v_1,\ldots,v_l,w_{l+1},\ldots,w_n\}$ spans $V$, then \[v_{l+1}=\sum_{j>l}\lambda_jw_j+\sum_{j<l+1}\mu_jv_j\]
+    By linear independence of $\{v_i\}_{i=1}^m$, there exists at least one $\lambda_j\neq 0$. Up to reordering, assume $\lambda_{l+1}\neq 0$, then $w_{l+1}\in\operatorname{span}(\{v_1,\ldots,v_{l+1},w_{l+2},\ldots,w_n\})$, so $\{v_1,\ldots,v_{l+1},w_{l+2},\ldots,w_n\}$ spans $V$. The base case is simple. 
+    \[v_1=\sum_{j}\lambda_jw_j\]
+    where $\lambda_1\neq 0$ up to reordering, so can swap in $v_1$.
+
+    If $m>n$, then the preceding argument shows that $\{v_1,\ldots,v_n\}$ spans $V$, but then $v_{n+1}\in\operatorname{span}(\{v_1,\ldots,v_n\})$ contradicting linear independence.
+\end{proof}
+This allows basis extension for vector spaces that has a finite spanning set: take a linear independent set and apply Steinitz exchange lemma to a finite spanning set.
+\begin{prop}[Inclusion Exclusion of dimension]
+    Let $U,W\le V$ be finite dimensional subspaces. 
+    \[\dim(U+W)=\dim U+\dim W-\dim(U\cap W)\]
+\end{prop}
+\begin{proof}
+    If $U\cap W=\{0\}$, then $U+W=U\oplus W$ and the result follows. Otherwise, take a basis of $U\cap W$. Extend. Prove that the union of the two extended bases form a basis of $U+W$. Count.
+\end{proof}
+
+\section{Linear maps and matrices}
+\begin{defn}[Elementary row and column operations]
+    Recall elementary matrices. Row operations by left multiplication, column operations by right multiplication.
+\end{defn}
+\begin{thm}[Rank-nullity theorem]
+    Let $V$ be a finite dimensional vector. Let $W$ be a vector space. Suppose $\alpha:V\to W$ is a lienar map, then    \[\dim V= r(\alpha)+n(\alpha)\]
+\end{thm}
+\begin{proof}
+    Several strategies
+    \begin{itemize}
+        \item Basis extension (construct a basis for $\ker\alpha$ and extend)
+        \item As a corollary of first isomorphism theorem
+        \item elementary operations (equivalent matrices), slightly complicated when $W$ has infinite dimension.
+    \end{itemize}
+\end{proof}
+\begin{thm}[Change of basis]
+    $B, B'$ bases of $V$. $C, C'$ bases of $W$
+    \[[\alpha]_{B',C'}=[\operatorname{id}_W]_{C,C'}[\alpha]_{B,C}[\operatorname{id}_V]_{B',B}\]
+    How to find $[\operatorname{id}_V]_{B,B'}$? Suppose $B=\{v_1,\ldots,v_n\}$, $B'=\{v_1',\ldots,v_n'\}$. 
+    Have $p_{ij}=([v_j']_{B})_i$, or in matrix notation, $P=([v_1']_B\ [v_2']_B\ \ldots\ [v_n']_B)=[\operatorname{id}_V]_{B',B}$. If $[v]_{B'}=a_jv_j'$, then $[v]_B=a_jp_{ij}v_i=(p_{ij}a_j)v_i$. This is exactly $P$ applied to $[v]_{B'}$.
+    %So if $[v]_{B'}=\alpha_iv_i'$, then $[v]_{B}=\alpha_ip_{ij}v_{j}$. We note that $\alpha_i$ are coordinates of $v$ with respect to $B'$, so the coordinate of $v$ with respect to $B$ is given by $\alpha_{i}{p_{ij}}$ (this is exactly how the matrix $(p_{ij})$ acts on the vector $(\alpha_1,\ldots,\alpha_n)^T$).
+\end{thm}
+\begin{prop}[Properties of $\det$ and $\operatorname{tr}$].\\
+\begin{itemize}
+    \item $\det$ is multiplicative, invariant under similarity transformation;
+    \item $\operatorname{tr}$ is linear, and $\operatorname{tr}(AB)=\operatorname{tr}(BA)$, and hence invariant under similarity transformation
+\end{itemize}
+\end{prop}
+We restrict our attention to finite dimensional vector space in the discussion of endomorphisms.
+\begin{thm}[Triangularization criterion]
+    $\alpha\in L(V,V)$ is triangulable (can be made upper triangular in some basis) iff $\chi_\alpha(t)$ factorizes as (not necessarily distinct) lienar factors.
+\end{thm}
+\begin{proof}
+    ``only if '' is obvious. ``if'' direction: find an eigenvalue (exist by factorization); construct a basis for the corresponding eigenspace; extend and then $\alpha$ is block upper triangular. Quotient out the eigenspace, and apply strong induction.
+    (Apply properties of det of block upper triangular matrix to split char polynomial and apply strong induction to the smaller block?)
+\end{proof}
+Therefore complex matrices are always triangulable.
+\begin{thm}[Diagonalization criterion]
+    $\alpha\in L(V,V)$ is diagonalizable iff there exists a polynomial $p(x)\in F[x]$ such that $p(\alpha)=0$ and $p(x)$ factorizes as distinct linear factors (cannot have double roots...)\\
+    Over $\CC$, TFAE,
+    \begin{itemize}
+        \item $\alpha$ is diagonalizable;
+        \item $c_\lambda=1$ for all eigenvalues $\lambda$, where $c_\lambda$ is the exponent of $(t-\lambda)$ in $m_\alpha(t)$.
+        \item $g_\lambda=a_\lambda$ (geometric multiplicity = algebraic multiplicity) for all eigenvalues.
+    \end{itemize}
+\end{thm}
+\begin{proof}
+If diagonalizable, then take $(x-\lambda_1)\cdots(x-\lambda_k)$, where $\lambda_i$ are distinct eigenvalues (distinct diagonal entries).
+
+If such polynomial exists, say $p(t)=\prod_{i=1}^k(t-\mu_i)=\sum_ic_it^i$, then $\mu_i$ are distinct eigenvalues. If $v$ is an eigenvector, then $0=p(\alpha)v=\sum_{i}c_i\lambda^i v$, so $\lambda=\mu_i$ for some $i$ by considering roots. It's enough to show that $V=\bigoplus_i V_{\mu_i}$ (decompose as the direct sum of eigenspaces).
+
+Define $p_i(t)=\prod_{j\neq i}(t-\mu_j)$, $h_i(t)=\dfrac{1}{p_i(\mu_i)}\prod_{j\neq i}(t-\mu_j)$, so $h_i(\mu_j)=\delta_{ij}$ and $\sum_ih_i(\mu_j)=1$ for all $j$. But $\sum_ih_i$ is a polynomial of degree at most $k-1$, so it must be constantly $1$. 
+
+Define $\pi_i=h_i(\alpha)$, then $\pi_i(V)\le V_{\mu_i}$ and $\sum_{i}\pi_i=\operatorname{id}_V$, so $V\le \bigoplus_i V_{\mu_i}$, and the result is obvious.
+\end{proof}
+\begin{thm}[Simultaneous diagonalization]
+    Suppose $\alpha,\beta\in L(V,V)$ are diagonalizable. They are simultaneously diagonalizable iff $\alpha\beta=\beta\alpha$ (they commute).
+\end{thm}
+\begin{proof}
+    If simul diag, then obviously commute.
+    Suppose commute. $\alpha$ is diagonalizable so  $V=\bigoplus_\lambda V_\lambda$. If $v\in V_\lambda$, then $\alpha\beta v=\beta\alpha v=\lambda\beta v$, so $\beta(v)$ is an e-vector of $\alpha$ with e-value $\lambda$, so $\beta(V_\lambda)\le V_\lambda$, so it suffices to look at how $\beta$ acts on each eigenspace $V_\lambda$. Since $\beta$ is diagonalizable, $\beta$ restricted to each eigenspace $V_\lambda$ is still diagonalizable. For each $\lambda$, choose a basis of $V_\lambda$ such that $\beta|_{V_\lambda}$ is diagonal. The union is an eigenbasis of $\alpha$ and $\beta$, so under this basis $\alpha$ and $\beta$ are both diagonal.
+\end{proof}
+\begin{thm}[Cayley-Hamilton theorem]
+Let $V$ be a finite dimensional, $\alpha\in L(V,V)$
+    $\chi_\alpha(\alpha)=0$
+\end{thm}
+\begin{proof}
+    In $\CC$, $\alpha$ is triangulable, so $\chi_\alpha(x)$ is in terms of diagonal entries. Compute $\chi_\alpha(\alpha)(v)$ for all $v\in V$.
+
+    In general field, consider $\operatorname{adj}(tI-A)$. Let $B=tI-A$, then $\det B= \chi_A(t)=t^n+a_{n-1}t^{n-1}+...+a_1t+a_0$ and $\operatorname{adj}(B)=B_{n-1}t^{n-1}+B_{n-2}t^{n-2}+...+B_0$. Have $(tI-A)(B_{n-1}t^{n-1}+...+B_0)=B\operatorname{adj}(B)=\det(B)I=(t^n+...+a_0)I$. Match coefficient, and substitute $t=A$, will get a telescoping series which gives $0$.
+\end{proof}
+\begin{thm}[Jordan normal form]
+c.f. GRM, every matrix can be written in JNF\\
+\end{thm}
+\begin{itemize}
+    \item (algebraic multiplicity) $a_\lambda = $ the sum of the sizes of all Jordan block with e-value $\lambda$;
+    \item (geometric multiplicity) $g_\lambda = $ the number of Jordan blocks with e-value $\lambda$
+    \item $c_\lambda = $ the size of the largest Jordan block with e-value $\lambda$.
+\end{itemize}
+\subsection{Dual spaces}
+\begin{prop}[Canonical embedding]
+    Let $V$ be a vector space (not necessarily finite dim), then $i:V\hookrightarrow V^{**}, v\mapsto \hat v$, where $\hat v(\epsilon)=\epsilon(v)$ for $\epsilon\in V^\ast$.
+\end{prop}
+For finite dimensional vector space, $i$ is the canonical isomorphism.
+
+\section{Bilinear forms}
+\begin{defn}
+$\phi:U\times V\to F$ ($U$, $V$ are vector spaces over $F$) is a bilinear form if it's linear in both argument.%$\phi(u,\cdot)\in V^\ast$ for all $u\in U$ and $\phi(\cdot, v)\in U^\ast$ for all $v\in V$.
+
+$Q:V\to F$ is a quadratic form if 
+\begin{enumerate}
+    \item $Q(\lambda v)=\lambda^2Q(v)$ for all $\lambda\in F$, $v\in V$;
+    \item the map $(u,v)\mapsto Q(u+v)-Q(u)-Q(v)$ is bilinear. (related to polarization identity)
+
+(When $F=\CC$, we say $\phi:U\times V\to \CC$ is a sesquilinear form if it's linear in the first argument and conjugate-linear in the second.)
+
+$\phi$ is Hermitian if it's sequilinear and $\phi(u,v)=\phi(v,u)^\ast$.
+
+The analog of $Q$ satisfies $Q(\lambda v)=|\lambda|^2Q(v)$.
+\end{enumerate}%there exists a bilinear form $\phi:V\times V\to F$ s.t. $Q(v)=\phi(v,v)$.
+\end{defn}
+\begin{prop}[Polarization identity]
+For symmetric bilinear form $\psi$, we have
+\[2\psi(u,v)=Q(u+v)-Q(u)-Q(v)\]
+(If $2$ is invertible in $F$, then this identity specifies $\psi$ uniquely)
+
+For Hermitian forms
+\[\psi(u,v)=\dfrac{1}{4}\left[Q(u+v)+iQ(u+iv)-Q(u-v)-iQ(u-iv)\right]\]
+See sheet 4 for a more general version of polarization identity.
+\end{prop}
+\begin{thm}[change of basis]
+Bilinear forms:
+\[[\phi]_{B'}=P^T[\phi]_B P=[\operatorname{id}_V]_{B',B}^T[\phi]_B[\operatorname{id}_V]_{B',B}\]
+For bilinear form $p_{ij}=([v_j']_{B})_i$, meaning that $v_j'=p_{ij}v_i$ then if $[v]_{B'}=a_jv_j'$, then $[v]_{B}=a_jp_{ij}v_i$, so \[\phi(v_j',v_m')=\phi(p_{ij}v_i,p_{nm}v_m)=p_{ij}\phi(v_i,v_n)p_{nm}\]
+For sesquilinear forms:
+\[[\phi]_{B'}=P^T[\phi]_B P^\ast\]
+Same derivation but complex conjugate when pulling things out from the second argument.
+\end{thm}
+\begin{thm}[Diagonalization of symmetric bilinear form]
+    Let $V$ be a finite dimensional vector space of $F$, and let $\psi:V\times V\to F$ be a symmetric bilinear form, then there exists a basis $B$ of $V$ s.t. $[\psi]_B$ is diagonal. (Every symmetric matrix is congruent to a diagonal matrix)
+\end{thm}
+\begin{proof}
+    Proceed by induction on $n=\dim V$. If $\psi(u,u)=0$ for all $u\in V$, then the matrix is trivial by polarization identity. Otherwise, choose $w\in V$ s.t. $\psi(w,w)\neq 0$. We must have $V=\langle w\rangle\oplus\langle w\rangle^\perp$. To see this, write $v=\lambda w+(v-\lambda w)$, then 
+    \[\psi(w,v-\lambda w)=\psi(w,v)-\lambda\psi(w,w)\]
+    meaning that we can choose $\lambda\in F$ s.t. RHS vanishes ($\psi(w,w)\neq 0$ by construction so this is possible).
+    Use induction hypothesis to find a basis for $\langle w\rangle^\perp$ s.t. $\psi|_{\langle w\rangle^\perp}$ is diagonal.
+\end{proof}
+Over $\RR$, can normalize and reorder so that $$[\psi]_B=\begin{pmatrix}
+    I_p & & \\
+    & -I_q & \\
+    & & 0
+\end{pmatrix}$$
+Over $\CC$, the result of quadratic form is quite trivial (by including $i$ in normalization, you get an identity submatrix on the top left and 0 elsewhere).
+\begin{thm}[Diagonalization of Hermitian form]
+    $V$ finite dim vect space over $\CC$. $\psi$ Hermitian form. There exists a basis where $[\psi]_B$ is 
+    \[
+    \begin{pmatrix}
+        I_p &&\\
+        &-I_q&\\
+        && 0\\
+    \end{pmatrix}
+    \]
+\end{thm}
+The proof is identical to the previous one.
+
+\begin{thm}[Sylvester's law of inertia]
+Let $V$ be a finite dimensional vector space over $\RR$. Let $\psi:V\times V\to \RR$ be a bilinear form, then the signature of $\psi$ is well-defined.
+
+If instead $V$ is a finite dimensional vector space over $\CC$ and $\psi$ is a Hermitian form, then the analogous notion of signature is also well-defined for $\psi(u,u)=Q(u)$.
+\end{thm}
+\begin{proof}
+    Suppose 
+    \begin{align*}
+        [\psi]_B=\begin{pmatrix}
+            I_p &&\\ 0&-I_q & \\ &&0
+        \end{pmatrix},\text{ }\text{ }[\psi]_{\tilde{B}}=\begin{pmatrix}
+            I_{\tilde{p}} &&\\ & -I_{\tilde{q}}\\ &&0
+        \end{pmatrix}
+    \end{align*}
+    Let $P$ (resp. $N$) be the subspace on which $[\psi]_B$ is positive definite (resp. negative semidefinite), $\tilde P$ the subspace on which $[\psi]_{\tilde B}$ is positive definite, then $\tilde P\oplus N\le V=P\oplus N$, which implies that $\dim P+\dim N=\dim V\ge \dim \tilde P+\dim N$, which implies that $p\ge p'$. Reversing the roles of the two matrices shows that $p\le p'$, so we must have $p=\tilde p$. Similar argument shows that $q=\tilde q$.
+\end{proof}
+
+\section{Inner product space}
+\begin{thm}[Gram-Schmidt]
+    If we have a sequence $(v_i)_{i\in I}$, $I=\{1,2,...\}$ (which may or may not terminate) of linearly independent vectors in an inner product space $V$, then there exists a sequence $(e_i)_{i\in I}$ of orthonormal vectors such that $\langle e_1,\ldots,e_k\rangle=\langle v_1,\ldots, v_k\rangle$ for any $k\in I$.
+\end{thm}
+\begin{proof}
+    Let $e_1=v_1/\Vert v_1\Vert$, and
+    \[e_{i+1}'=v_{i+1}-\sum_{j=1}^i\langle v_j,e_j\rangle e_j,\text{ }\text{ }\text{ }e_{i+1}=e_{i+1}'/\Vert e_{i+1}'\Vert\]
+    Can show that $e_{i+1}\neq 0$ by linear independence of $(v_i)$, and $\langle e_1,\ldots,e_k\rangle=\langle v_1,\ldots, v_k\rangle$ is obvious.
+\end{proof}
+\begin{rem}
+    Gram-Schmidt can be used to diagonalize quadratic forms (not necessarily positive definite).
+\end{rem}
+\begin{thm}[Spectral theorems for self-adjoint operators in finite dimensions]
+    Let $V$ be an inner product space over $\RR$ or $\CC$, and let $\alpha\in L(V,V)$ be a self-adjoint operator, then $V$ has an orthonormal basis of eigenvectors of $\alpha$.
+\end{thm}
+\begin{proof}
+Take a real eigenvalue and an eigenvector $v$, then $\langle v\rangle\oplus\langle v\rangle^\perp=V$ and $\alpha(\langle v\rangle^\perp)\le\langle v\rangle ^\perp$. To see the latter, note that if $u\perp v$, then $\langle\alpha(u),v\rangle=\langle u,\alpha(v)\rangle=\lambda^\ast\langle u,v\rangle=0$. Apply induction hypothesis to find an orthonormal basis of e-vectors in $\langle v\rangle^\perp$ and take union.
+\end{proof}
+\begin{thm}[Spectral theorems for unitary operators in finite dimensions]
+$V$ inner product space over $\CC$. $\alpha\in L(V)$ unitary. $V$ has an orthonormal basis of eigenvectors of $\alpha$.    
+\end{thm}
+The proof is similar. Just note that eigenvalues have unit modulus and this implies orthogonality of e-vectors with different e-values.
+\begin{thm}[Spectral theorem for normal operators]
+$V$ inner product space over $\CC$
+    If $\alpha\in L(V)$ is normal, then $V$ has an orthonormal basis of eigenvectors of $\alpha$.
+\end{thm}
+\begin{proof}
+    Conjugates of eigenvalues of $\alpha$ are precisely eigenvalues of $\alpha^\ast$. 
+    Eigenvectors corresponding to different e-values are orthogonal.
+    $\operatorname{Im}(\alpha-\lambda I)\perp\ker(\alpha-\lambda I)$.
+    $\ker(\alpha-\lambda I)^2=\ker(\alpha-\lambda I)$
+    So JNF is diagonal. Apply Gram-Schmidt to find orthonormal basis for each eigenspace and take union.
+\end{proof}
+\begin{proof}
+    Induction: Pick an e-vector $v$ of e-value $\lambda$, and consider $V=\langle v\rangle\oplus\langle v\rangle^\perp$. $\alpha(\langle v\rangle^\perp)\le \langle v\rangle^\perp$ (direct computation). Apply induction hypothesis to find a basis of e-vectors in $\langle v\rangle^\perp$.
+\end{proof}
+\begin{thm}[Simultaneous diagonalization]
+    Let $V$ be a finite dim vect space over $F=\RR$ (resp. $\CC$). Let $\phi,\psi:V\times V\to F$ be symmetric bilinear (resp. Hermitian) forms. If $\phi$ is positive definite then there exists a basis $B$ s.t. $[\phi]_B$ and $[\psi]_B$ are diagonal.
+\end{thm}
+\begin{proof}
+    There exists a basis such that $[\phi]_C=I$ (by positive definiteness). $[\psi]_C$ is some symmetric (resp. Hermitian) matrix.  Use orthogonal (resp. unitary) transformation to diagonalize $\psi$, then $[\phi]_B$ will still be the identity matrix, which is diagonal.
+\end{proof}
+
+\section{Computation techniques}
+\begin{itemize}
+    \item Complete the square for quadratic forms (Lagrange method). If the quadratic term appears, then go as far as you can (put things in a square), reduce the form to $n-1$ variables. If only the cross term appear, say $a_{ij}x_ix_j$, $a_{ij}\neq 0$ but $a_{ii}=a_{jj}=0$, then consider \[\dfrac{1}{2a_{ij}}\left(\sum_k (a_{ik}+a_{jk})x_k\right)^2-\dfrac{1}{2a_{ij}}\left(\sum_{k}(a_{ik}-a_{jk})x_k\right)^2\]
+    This will eliminate both $x_i$ and $x_j$ from the expression thereby reducing the form to $n-2$ variables. Repeat these two steps until you have completed the square.
+    \item Dual basis. $[\operatorname{id}_V]_{B',B}=P$, then 
+    $[\operatorname{id}_{V^\ast}]_{B'^{\ast},B^\ast}=[\operatorname{id}_V]^T_{B,B'}=([\operatorname{id}_V]^{-1}_{B',B})^T$, 
+    so the change of basis matrix in the dual basis is $(P^{-1})^T$, so if $([v_j']_{B})_i=P_{ij}$, then $([v'^\ast_j]_{B})_i=(P^{-1})_{ji}$.
+    \item Eigenvalues/Eigenvectors (decomposition as direct sum); generalized eigenspaces. Sheet 2 Q11 is useful: If $\operatorname{id}_V=\sum_i\pi_i$ and $\pi_i\pi_j=0$ if $i\neq j$, then $V=\bigoplus_i\operatorname{Im}(\pi_i)$.
+\end{itemize}
+
+
+
+\end{document}

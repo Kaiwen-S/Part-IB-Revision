@@ -1,0 +1,185 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{enumerate,bbm}
+\usepackage{tikz,graphicx,color,mathrsfs,color,hyperref}
+\usepackage{caption,float}
+\usepackage[a4paper,margin=1in,footskip=0.25in]{geometry}
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+\usepackage{tabularx,capt-of}
+
+\usepackage{blindtext}
+%Image-related packages
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage[export]{adjustbox}
+\usepackage{lipsum}
+
+%hyperref setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
+
+%New colors defined below
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+%Code listing style named "mystyle"
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{backcolour}, commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=left,                    
+  numbersep=5pt,                  
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2
+}
+
+%"mystyle" code listing set
+\lstset{style=mystyle}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}[section]
+\theoremstyle{remark}
+\newtheorem{rem}{Remark}
+\newtheorem{remS}[section]{defn}
+\newtheorem{lem}[defn]{Lemma}
+\theoremstyle{plain}
+\newtheorem{thm}[defn]{Theorem}
+\newtheorem{prop}[defn]{Proposition}
+\newtheorem{fact}[defn]{Fact}
+\newtheorem{crly}[defn]{Corollary}
+\newtheorem{conj}[defn]{Conjecture}
+%\newtheorem*{programming*}{Programming Task}
+
+%\newtheorem{innercustomgeneric}{\customgenericname}
+%\providecommand{\customgenericname}{}
+%\newcommand{\newcustomtheorem}[2]{%
+%  \newenvironment{#1}[1]
+%  {%
+%   \renewcommand\customgenericname{#2}%
+%   \renewcommand\theinnercustomgeneric{##1}%
+%   \innercustomgeneric
+%  }
+%  {\endinnercustomgeneric}
+%}
+
+%\newcustomtheorem{question}{Question}
+%\newcustomtheorem{programming}{Programming Task}
+
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\PP}{\mathbb{P}}
+
+\newcommand{\calD}{\mathcal{D}}
+
+\title{VP}
+\author{ }
+\date{ }
+
+\begin{document}
+
+\maketitle
+
+\section{EL equations}
+Functional:
+\begin{align}
+    F[y]=\int_a^b f(x,y,y')dx
+\end{align}
+Euler-Lagrange equation (basic):
+\begin{align*}
+    \dfrac{\partial f}{\partial y}-\dfrac{d}{dx}\dfrac{\partial f}{\partial y'}=0
+\end{align*}
+Euler-Lagrange equation (first integral eliminating $x$):
+\begin{align*}
+    f-y'\dfrac{\partial f}{\partial y'}=\text{Constant}
+\end{align*}
+Euler-Lagrange equation (first integral eliminating $y$):
+\begin{align*}
+    \dfrac{\partial f}{\partial y'}=\text{Constant}
+\end{align*}
+Euler-Lagrange equation with constraint $G[y]=0$ (Lagrange multiplier): \textbf{Apply EL equation to $F[y]-\lambda G[y]$.}\\
+Euler-Lagrange equation (multiple dependent variables), i.e., $\int_a^b f(x,y_1,\ldots,y_n, y_1',\ldots,y_n')dx$: 
+\begin{align*}
+    \dfrac{\partial f}{\partial y_i}-\dfrac{d}{dx}\dfrac{\partial f}{\partial y_i'}=0
+\end{align*}
+for each $i$. (So this is a system of DEs)\\
+First integral eliminating $x$:
+\begin{align*}
+    f-\sum_iy_i'\dfrac{\partial f}{\partial y_i'}=\text{Constant}
+\end{align*}
+Euler-Lagrange equation (multiple independent variables), e.g., $\int_V f(x_1,\ldots,x_n,y,y_{x_1},\ldots,y_{x_n})dV$:\\
+(summation convention applies)
+\begin{align*}
+    \dfrac{\partial f}{\partial y}-\dfrac{\partial f}{\partial x_i}\dfrac{\partial f}{\partial y_{x_i}}=0
+\end{align*}
+Euler-Lagrange equation (higher derivatives), e.g., $\int_a^b f(x,y,y^{(1)},\ldots,y^{(n)})dx$:
+\begin{align*}
+    \dfrac{\partial f}{\partial y}-\sum_{i=1}^n(-1)^i\dfrac{d^i}{dx^i}\dfrac{\partial f}{\partial y^{(i)}}=0
+\end{align*}
+
+
+\section{Principles}
+Fermat's principle:\\
+Least action principle:
+
+\section{Legendre Transform}
+Let $f:S\to \RR$, $S\subseteq\RR^n$. The Legendre transform is given by
+\begin{align*}
+    f^\ast({\bf p})=\sup_{{\bf x}\in S}({\bf p}\cdot {\bf x}-f({\bf x}))
+\end{align*}
+Can take Legendre transform w.r.t one variable.
+
+\section{Second Variation}
+Second variation (basic form): $y\mapsto y+\epsilon\eta$
+\begin{align*}
+    \delta^2F[y]=\dfrac{1}{2}\int_a^b\left(\eta^2\dfrac{\partial^2 f}{\partial y^2}+2\eta\eta'\dfrac{\partial^2 f}{\partial y\partial y'}+\eta'^2\dfrac{\partial^2 f}{\partial y'^2}\right)dx
+\end{align*}
+Second variation (integrate the middle term by part):
+\begin{align*}
+    \delta^2F[y]=\dfrac{1}{2}\int_a^b(Q\eta^2+P(\eta')^2)dx
+\end{align*}
+\begin{align*}
+    Q=\dfrac{\partial^2 f}{\partial y^2}-\dfrac{d}{dx}\dfrac{\partial^2 f}{\partial y\partial y'},\ \ \ \ P=\dfrac{\partial^2 f}{\partial y'^2}
+\end{align*}
+\begin{thm}[Jacobi accessory condition]
+    If there exists a nowhere vanishing solution to \[-(Pu')'+Qu=0\]
+    then $\delta^2F[y]>0$.
+\end{thm}
+
+\section{Important tricks}
+Prove global optimum:
+\begin{itemize}
+    \item Complete the square (integrand or multivariate functions)
+    \item Consider $F[y+\eta]-F[y]$. Do not assume $\eta$ is a small variation.
+\end{itemize}
+Integration techniques:
+\begin{enumerate}
+    \item IBP and sub.
+    \item Product rule in some way.
+    \item Add 0.
+\end{enumerate}
+
+\end{document}

@@ -1,0 +1,386 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{enumerate,bbm}
+\usepackage{tikz,graphicx,color,mathrsfs,color,hyperref}
+\usepackage{caption,float}
+\usepackage[a4paper,margin=1in,footskip=0.25in]{geometry}
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+\usepackage{tabularx,capt-of}
+
+\usepackage{blindtext}
+%Image-related packages
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage[export]{adjustbox}
+\usepackage{lipsum}
+
+%hyperref setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
+
+%New colors defined below
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+%Code listing style named "mystyle"
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{backcolour}, commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=left,                    
+  numbersep=5pt,                  
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2
+}
+
+%"mystyle" code listing set
+\lstset{style=mystyle}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}[section]
+\theoremstyle{remark}
+\newtheorem{rem}{Remark}
+\newtheorem{remS}[section]{defn}
+\newtheorem{lem}[defn]{Lemma}
+\theoremstyle{plain}
+\newtheorem{thm}[defn]{Theorem}
+\newtheorem{prop}[defn]{Proposition}
+\newtheorem{fact}[defn]{Fact}
+\newtheorem{crly}[defn]{Corollary}
+\newtheorem{conj}[defn]{Conjecture}
+%\newtheorem*{programming*}{Programming Task}
+
+%\newtheorem{innercustomgeneric}{\customgenericname}
+%\providecommand{\customgenericname}{}
+%\newcommand{\newcustomtheorem}[2]{%
+%  \newenvironment{#1}[1]
+%  {%
+%   \renewcommand\customgenericname{#2}%
+%   \renewcommand\theinnercustomgeneric{##1}%
+%   \innercustomgeneric
+%  }
+%  {\endinnercustomgeneric}
+%}
+
+%\newcustomtheorem{question}{Question}
+%\newcustomtheorem{programming}{Programming Task}
+
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\PP}{\mathbb{P}}
+
+\newcommand{\calD}{\mathcal{D}}
+
+\title{CA}
+\author{ }
+\date{ }
+
+\begin{document}
+\maketitle
+
+\section{Basic stuff about holomorphic functions}
+\begin{thm}[Cauchy-Riemann equation]
+   Let $f:U\to \CC$ be a function on an open set $U\subseteq\CC$. Then $f(x+iy)=u(x,y)+iv(x,y)$ is holomorphic at $z=c+id\in U$ with derivative $p+iq$ if and only if $u,v$ are real differentiable at $(c,d)$ and they satisfy the Cauchy-Riemann equation, i.e.,
+    \[\begin{cases}
+        u_x=v_y\\
+        u_y=-v_x\\
+    \end{cases}\]
+\end{thm}
+\begin{rem}
+    $u,v$ are said to be harmonic conjugate to each other.
+\end{rem}
+\begin{prop}[Conformality]
+    If $f:U\to\CC$ is holo'c and $f'(w)\neq 0$, then $f$ preserves angles at $z=a$.
+\end{prop}
+\begin{proof}
+Take two paths $\gamma_1,\gamma_2$ s.t. $\gamma_1(0)=\gamma_2(0)=w$. Have $\theta=\operatorname{Arg}(\gamma_2'(0))-\operatorname{Arg}(\gamma_1'(0))$. $f$ is angle preserving because $\operatorname{Arg}(f\circ\gamma_j)'(0))=\operatorname{Arg}(\gamma_j'(0)f'(w))=\operatorname{Arg}(\gamma_j'(0))+\operatorname{Arg}(f'(w))+2n\pi$. (valid since $f'(w)\neq 0$ by assumption, so we have well-defined argument)  
+\end{proof}
+\section{Complex integrals}
+\begin{thm}[FTC]
+    If $f:U\to\CC$ and $U\subseteq \CC$ open, and there exists $F$ on $U$ s.t. $F'=f$, then for any curve $\gamma:[0,1]\to U$,
+    \[\int_\gamma f(z)dz=F(\gamma(b))-F(\gamma(a))\]
+\end{thm}
+\begin{proof}
+    Direct computation. In the final step split into real and imag part and use real analysis.
+\end{proof}
+\begin{thm}[Antiderivative thm (partial converse to FTC)]
+If $f:D\to \CC$ is continuous on a domain $D$, and $\int_\gamma f=0$ for all closed curves, then $f$ has a primitive on $D$. 
+\end{thm}
+\begin{thm}[Goursat's theorem]
+    $f:U\to\CC$ holo'c, $U\subseteq\CC$ open, then $\int_{\partial T}f=0$ for all triangles $T\subseteq U$.
+\end{thm}
+\begin{proof}
+    Pick some $T\subseteq U$ (Note that $T$ is closed and bounded hence compact). Let $I=\int_{\partial T}f$ and $L=\operatorname{length}(\partial T)$
+    Subdivide into $T_1,...,T_4$ using midpoints of edges, then the integral along the boundary of one of them is $\ge 1/4 I$, call it $T^{(1)}$. Subdivide $T^{(1)}$ and construct $T^{(2)}\ge 1/4\int_{\partial T^{(1)}}f\ge 1/16 I$. Repeat this process, we get a sequence
+    \[T^{(1)}\supseteq T^{(2)}\supseteq\ldots\]
+    We have $\operatorname{length}(T^{(j)})\le 2^{-j}L$, so $\operatorname{diam}(T^{(j)})\to 0$ as $j\to\infty$.
+    Claim $\bigcap_i T^{(i)}\neq\varnothing$ (intersection of nested sequence of compact sets). Choose $w$ in this big intersection.
+
+    Let $\epsilon>0$ be given. $f$ is holo'c at $w$, so can pick $\delta>0$ s.t. $|f(z)-f(w)-(z-w)f'(w)|<\epsilon|z-w|$ whenever $|z-w|<\delta$. Also, can pick $N$ s.t. $T^{(n)}\subseteq D(w,\delta)$ for all $n\ge N$ (possible because diam goes to zero).
+    \[4^{-n}I\le\left|\int_{\partial T^{(n)}}f\right|=\left|\int_{\partial T^{(n)}}(f(z)-f(w)-(z-w)f'(w))dz\right|\le 2^{-n}L\epsilon\sup_{\partial T^{(n)}}|z-w|\le 4^{-n}L^2\epsilon\]
+    Rearrange.
+\end{proof}
+\begin{prop}
+    Let $S\subseteq U$ be a finite subset of a domain and $f:U\to \CC$ holomorphic away from $S$ and $f$ is continuous on $U$, then for any triangle $T\subseteq U$, $\int_{\partial T}f=0$.
+\end{prop}
+\begin{proof}
+WLOG assume $|S|=\{a\}$.
+    Pick some $T\subseteq U$ which contains $a$. By subdivision, can find smaller $T'$ s.t. $a\in T'\subseteq T$, then Goursat implies  $\int_T f=\int_{T'}f$. Estimate $|\int_{T'}f|\le \operatorname{length}(T')\sup_{z\in\partial T'}|f(z)|$. The sup term is bounded by continuity, so RHS goes to $0$ as $T'$ shrinks.
+\end{proof}
+\begin{thm}[Cauchy's theorem for convex/star-convex domain]
+    If $f:U\to\CC$ is cts, and holo'c away from finitely points, then $\int_\gamma f=0$ for any closed curves $\gamma$.
+\end{thm}
+\begin{proof}
+    Antiderivative theorem for star-convex domain is true with weaker hypothesis: $\int_{\partial T}f=0$ for all triangles $T\subseteq U$. (Proof exactly the same)
+
+    Preceding theorem shows that $\int_{\partial T}f=0$ for any triangle $T$. By antiderivative theorem for star-convex comain, $f$ has an antiderivative on $U$. Apply FTC.
+\end{proof}
+\begin{thm}[Cauchy integral formula on a disk (basic)]
+   Let $U\subseteq\CC$ be a domain. If $f:U\to\CC$ is holo'c and $\overline{D(a,r)}\subseteq U$, then for all $z\in D(a,r)$,
+   \[f(z)=\dfrac{1}{2\pi i}\int_{\partial D(a,r)}\dfrac{f(w)}{w-z}dw\]
+\end{thm}
+\begin{proof}
+By Cauchy's theorem on a disk
+    \[\int_{\partial D(a,r)}\dfrac{f(w)-f(z)}{w-z}dw=0\]
+Have $|w-a|=r>|z-a|$, so geometric expansion works.
+\[\dfrac{1}{w-z}=\dfrac{1}{w-a-(z-a)}=\dfrac{1}{(w-a)(1-(z-a)/(w-a))}=\sum_{n\ge 0}\dfrac{(z-a)^n}{(w-a)^{n+1}}\]
+Swap limit using uniform convergence.
+\end{proof}
+\begin{crly}[Mean value property]
+    \[f(a)=\int_0^1f(a+re^{2i\pi t})dt\]
+\end{crly}
+The proof is essentially by CIF.
+\begin{thm}[Liouville's theorem]
+    Bounded entire functions are constant.
+\end{thm}
+\begin{proof}
+Pick some $z\neq 0$ and $r>|z|$.
+    \begin{align*}
+        |f(z)-f(0)|&=\dfrac{1}{2\pi}\left|\int_{D(0,r)}f(w)\left(\dfrac{1}{w-z}-\dfrac{1}{w}\right)dw\right|\\
+        &=\dfrac{|z|}{2\pi}\left|\int_{D(0,r)}\dfrac{f(w)}{w(w-z)}\right|\\
+        &\le \dfrac{|z|}{2\pi}2\pi r\sup_{|w|=r}\dfrac{|f(w)|}{r|w-z|}\\
+        &\le \sup_{|w|=r}\dfrac{|z|M}{|w-z|}\to 0
+    \end{align*} as $r\to\infty$.
+\end{proof}
+\begin{thm}[Generalization of Liouville (not covered)]
+    Entire functions with sublinear growth are constant.
+\end{thm}
+The proof is entirely the same. Just replace $M$ with bound of the form $M(1+|w|^\alpha)$, where $\alpha\in(0,1)$.
+\begin{thm}[Fundamental theorem of algebra]
+    If $p(x)\in\CC[x]$ is non-constant, then $p(x)$ has a root in $\CC$.
+\end{thm}
+\begin{proof}
+    If $p$ has no root, then consider $\frac{1}{f(z)}$. It's entire and bounded (Use limit to bound everything except on a closed disk, then use compactness). Contradicting Liouville.
+\end{proof}
+\begin{thm}[local maximum (modulus) principle]
+    Let $f:D(a,r)\to\CC$ be holo'c. If $|f(z)|\le |f(a)|$ for all $z\in D(a,r)$, then $f$ is constant on $D(a,r)$.
+\end{thm}
+\begin{proof}
+Mean value property,
+    \[|f(a)|=\left|\int_0^1 f(a+\rho e^{2\pi it})dt\right|\le \sup_{t\in[0,1]}|f(a+\rho e^{2\pi it})|\le f(a)\]
+    for all $0<\rho<r$. Inequality must be equality, so $|f|$ must be constantly equal to $|f(a)|$, so $f$ is constant (C-R equation or Liouville).
+\end{proof}
+
+
+\section{Expansions}
+\begin{thm}[Taylor series representation]
+    $f:D(a,r)\to\CC$ holo'c Then $f$ is represented by a convergent power series on $D(a,r)$
+    \[f(z)=\sum_{n\ge 0}c_n(z-a)^n,\text{ }c_n=f^{(n)}(a)/n!=\dfrac{1}{2\pi i}\int_{\partial D(a,\rho)}\dfrac{f(w)}{(w-a)^{n+1}}dw\]
+    for any $|z|<\rho<r$.
+\end{thm}
+\begin{proof}
+    Let $|z-a|<\rho<r$. Apply CIF for disks and geometric expansion (swap limit by unif convergence).
+\end{proof}
+So holo'c functions are analytic.
+\begin{prop}[CIF for derivatives] Let $f$ be holo'c on $U$ and $\overline{D(a,r)}\subseteq U$. Then for all $z\in D(a,r)$,
+\[f^{(n)}(z)=\dfrac{n!}{2\pi i}\int_{\partial D(a,r)}\dfrac{f(w)}{(w-z)^{n+1}}dw\]
+\end{prop}
+\begin{proof}
+    By induction. Consider $f(w)/(w-z)^{n+1}$ and differentiate with respect to $w$. Use antiderivative thm + induction hypothesis.
+\end{proof}
+\begin{thm}[Morera's theorem]
+$f:U\to\CC$.
+    If $\int_\gamma f=0$ for all closed curves $\gamma$, then $f$ is holo'c on $U$.
+\end{thm}
+\begin{proof}
+    Antiderivative thm + analyticity.
+\end{proof}
+\begin{thm}[Laurent series representation]
+    If $f$ is holo'c on an annulus $A=\{z\in\CC:r<|z-a|<R\}$, where $0\le r<R\le \infty$, then
+    \begin{itemize}
+        \item $f$ has a unique convergent expansion (Laurent series) on $A$, namely
+        \[f(z)=\sum_{n=-\infty}^\infty c_n(z-a)^n\]
+        \item for any $r<\rho'\le \rho<R$, the Laurent series converges uniformly $\{\rho'\le|z-a|\le \rho\}$.
+        \item For  any $r<\rho<R$, coefficients are given by \[c_n=\dfrac{1}{2\pi i}\int_{\partial D(a,\rho)}\dfrac{f(w)}{(w-a)^{n+1}}dw\]
+    \end{itemize}
+\end{thm}
+
+\begin{thm}[Residue theorem]
+    Let $f$ be meromorphic in a domain $D$ and $\gamma$ is a closed curve which is homologous to $0$ in $D$. Assume no poles of $f$ lie on $\gamma$ and only finitely many poles at $\{a_1,...,a_m\}$ of $f$ has $I(\gamma,a_i)\neq 0$, then
+    \[\int_\gamma f=2\pi i\sum_{i=1}^m I(\gamma;a_i)\operatorname{Res}_{z=a_i}f(z)\]
+\end{thm}
+\begin{proof}
+    Subtract all principal parts from $f$, then the resulting function is holomorphic (has removable singularities only) in the domain obtained by removing singularities with $I(\gamma,a)\neq 0$ ($\gamma$ is still homologous to zero in this new domain). Apply Cauchy's theorem (generalized version).
+\end{proof}
+\begin{thm}[Jordan's lemma]
+    Suppose $f$ is holo'c for $|z|>r$ for some $r>0$ and assume that $zf(z)$ is bounded (Or simpler $|f(z)|\to 0$ as $|z|\to\infty$). Then for all $\alpha>0$, we have
+    \[\int_{C_R'}f(z)e^{i\alpha z}dz\to 0\text{ as } R\to\infty\]
+    $C_R'$ is $\gamma:[0,\pi]\to\CC, t\to Re^{it}$. Similar statement holds for $\alpha<0$ and the semicircle on lower half-plane.
+\end{thm}
+\begin{proof}
+    %Split $C_{R}'$ into two parts: $t\in[0,\pi/2]$ ($\gamma_1$) and $t'\in[\pi/2,\pi]$ ($\gamma_2$). Have $\sin(t)/t\ge 2/\pi$ on $[0,\pi/2]$ and $|e^{i\alpha z}|=e^{-\alpha R\sin t}$.
+    %Can estimate
+    %\[|e^{i\alpha z}|\le\begin{cases}
+    %    e^{-\alpha R\cdot 2t/\pi} &\text{ for } \gamma_1\\ e^{-\alpha R\cdot 2(\pi-t)/\pi} &\text{ for } \gamma_2
+    %\end{cases}\]
+    %Then
+    %\[\left|\int_{\gamma_1}f(z)e^{i\alpha %z}dz\right|=\left|\int_{\gamma_1}izf(z)e^{i\alpha z}dt\right|\]
+    %Use estimates to bound and compute the integral. (Similar for $\gamma_2$)
+    Symmetry of $\sin$ and Jordan's inequality.
+\end{proof}
+
+
+\section{Zeros and singularities}
+\begin{thm}[Principle of isolated zeros]
+Let $f:D(a,r)\to\CC$ be holo'c. $f$ is not constantly $0$. Then there exists $0<\rho<r$ s.t. $f(z)\neq 0$ on $D(a,\rho)^\ast$.  
+\end{thm}
+\begin{proof}
+    If $f(a)\neq 0$, then we are done by continuity. If $f(a)=0$ and is a zero of some positive order, then write $f(z)=(z-a)^mg(z)$ for some holo'c $g$ s.t. $g(a)\neq 0$ (possible by Taylor series expansion). By continuity of $g$, such punctured disk exists.
+\end{proof}
+\begin{thm}[Identity theorem]
+Let $f,g$ be holo'c on the domain $U$. Define $S=\{z\in U:f(z)=g(z)\}$. If $S$ has an accumulation point in $U$, then $f(z)=g(z)$ for all $z\in U$.
+\end{thm}
+\begin{proof}
+    Let $h=f-g$. $h$ is holo'c on $U$ and has a non-isolated zero at $w$ iff $w$ is an accumulation point of $S$. Principle of isolated zeros implies that $h\equiv 0$ on some $D(w,\epsilon)$. By Taylor series representation, $h\equiv 0$ on any $D(w,r)\subseteq U$. The set $\{z\in U:\exists r>0, h|_{D(z,r)}\equiv 0\}$ is a non-empty open subset of $U$. It's complement is $\{z\in U:\forall r>0, \exists z'\in D(z,r), f(z')\neq 0\}$ which is also open (the selection condition is equivalent to $f^{(n)}(z)\neq 0$ for some $n$). So by connectedness, the second set is empty, so $h\equiv 0$ on $U$.
+\end{proof}
+\begin{crly}[maximum modulus/global maximum]
+Let $U$ be a bounded domain. If $f:\overline{U}\to\CC$ is continuous and $f$ is holo'c on $U$, then the maximum of $|f|$ is attained in $\overline{U}\setminus U$.
+\end{crly}
+\begin{proof}
+    $\overline{U}$ is closed and bounded so compact. $|f|$ attains max  $m$ in $\overline{U}$. Suppose $|f(z_0)|=m$ for some $z_0\in U$, then local max principle implies that $f$ is constant on some open disk about $z_0$, then identity theorem implies that $f$ is constant on $U$, so $f$ is constant on $\overline{U}$ by continuity, so $f(z)=m$ for all $m\in\overline{U}\setminus U$.
+\end{proof}
+\begin{thm}[Argument principle]
+Let $\gamma$ be a closed curve bounding a domain $D$, and let $f$ be meromorphic on a nbd of $\gamma\cup D$. If $f$ has no zeros or poles on $\gamma$, then
+\[I(f\circ\gamma,0)=\int_\gamma \dfrac{f'}{f}dz=\#\text{ of zeros in }D-\#\text{ of poles in }D\] (counted with multiplicities)
+\end{thm} 
+\begin{proof}
+    First prove that if $f$ is meromorphic with a zero (resp. a pole) of order $k$ at $z=a$. Then, $\dfrac{f'(z)}{f(z)}$ has a pole at $z=a$ with residue $k$ (resp. $-k$) by writing $f(z)=(z-a)^kg(z)$, where $g$ is holo'c and $g(a)\neq 0$, then compute the residue. Then use residue theorem.
+\end{proof}
+\begin{lem}[Properties of winding number]
+    $\gamma$ closed curve. $w\mapsto I(\gamma,w)$ is a locally constant map.
+\end{lem}
+\begin{proof}
+    Sheet 3 Q10. First show that if $\gamma,\sigma$ are two closed curves such that for all $t$, $|\gamma(t)-\sigma(t)|<|\gamma(t)-w|$, then $I(\gamma,w)=I(\sigma,w)$ by considering $(\gamma-w)/(\sigma-w)$ about $0$. Then use translational symmetry to deduce that if $\gamma$ doesn't meet $D(w,\epsilon)$, then $\forall z\in D(w,\epsilon)$, $I(\gamma,w)=I(\gamma,z)$.
+\end{proof}
+\begin{thm}[Local mapping degree]
+    Let $f:D(a,R)\to\CC$ be holo'c and non-constant with local degree $k>0$ at $z=a$. Then for $r>0$ sufficiently small, there exists $\epsilon>0$ s.t. $0<|w-f(a)|<\epsilon\implies w=f(z)$ has $k$ simple solutions.
+\end{thm}
+\begin{proof}
+    By principle of isolated zero, can find $r>0$ s.t. $f(z)-f(a)\neq 0$ and $f'(z)\neq 0$ on $\overline{D(a,r)}\setminus \{a\}$. Then $f\circ\gamma$ doesn't contain $f(a)$, so can find $D(f(a),\epsilon)$ that doesn't intersect the image of $f\circ\gamma$. For all $w\in D(f(a),\epsilon)$, $I(f\circ\gamma,w)=I(f\circ\gamma,f(a))=k$ [c.f. sheet 3 Q10(b)]. So $w$ has $k$ preimages. Since $f'\neq 0$ on the punctured disk, they are all distinct.
+\end{proof}
+\begin{crly}[Open mapping theorem]
+    Non-constant holo'c functions on a domain are open maps.
+\end{crly}
+\begin{proof}
+    Local mapping degree theorem says that If $r,\epsilon$ are sufficiently small, $\#\text{ preimages of }w\text{ in }D(a,r)=\deg_{z=a}f(z)>0$ for all $w\in D(f(a),\epsilon)$. In this situation, $D(f(a),\epsilon)\subseteq f(D(a,r))$.
+\end{proof}
+\begin{thm}[Rouche's theorem]
+Let $\gamma$ bound a domain $D$, and $f,g$ holo'c on a nbd of $nbd$. If $|f|>|g|$ for all $z\in\gamma$, then $f$ and $f+g$ has the same number of zeros on $D$.
+\end{thm}
+\begin{proof}
+    $|f|>|g|$ on $\gamma$, so $f$ and $f+g$ are nowhere $0$ on $\gamma$. Apply argument principle to $h=(f+g)/f=1+g/f$. We have $|h-1|=|g/f|<1$, so $h(\gamma)\in D(1,1)$, so $I(h\circ\gamma,0)=0$, so the number of zeros of $h$ equals the number of poles of $h$ in $D$. This is precisely saying that the number of roots of $f$ and $f+g$ are equal (counting multiplicities).
+\end{proof}
+
+\begin{rem}
+    Rouche's theorem implies open mapping theorem
+\end{rem}
+\begin{proof}
+By principle of isolated zeros. Can find a sufficiently small $r>0$ s.t. $f(z)-f(a)\neq 0$ on $D(a,r)^\ast$. Let $\gamma$ be the boundary of the disk, then $|z-a|=r$. Choose $0<\epsilon<\min\{|f(z)-f(a)|\}$. WTS $D(f(a),\epsilon)\subseteq f(D(a,r))$. Pick $w\in D(f(a),\epsilon)$. Consider $g(z)=f(z)-w$. Then $g(z)=f(z)-f(a)+f(a)-w$. Since $|f(a)-w|<\epsilon<|f(z)-f(a)|$ on $\gamma$, Rouche's theorem implies that $g(z)$ and $f(z)-f(a)$ have the same number of roots in $D(a,r)$, which is $\ge 1$. Done.
+\end{proof}
+
+\subsection{Classification of singularities}
+\[
+\begin{cases}
+    \text{isolated}\begin{cases}
+        \text{removable}\\
+        \text{poles}\\
+        \text{essential}
+    \end{cases}\\
+    \text{non-isolated (essential)} & \text{[include branch point sing (CM)]}
+\end{cases}
+\]
+The following theorem from sheet 2 is occasionally useful.
+\begin{thm}[Casorati-Weierstrass]
+If $f:D(a,r)^\ast\to\CC$ be a holo'c function which has an essential singularity at $a$ (so $a$ is an isolated essential singularity), then 
+\[\forall w\in\CC,\forall\epsilon>0,\forall\delta>0,\exists z\in D(a,\delta)^\ast\text{ s.t. }f(z)\in D(w,\epsilon)\]
+\end{thm}
+\begin{proof}
+    By contradiction (c.f. sheet 2 Q9). Suppose not, then there exists $w_0\in\CC,\epsilon_0>0,\delta_0>0$ s.t. $\forall z\in D(a,\delta_0)^\ast$, $|f(z)-w_0|\ge\epsilon_0$. Consider $g(z)=1/(f(z)-w_0)$. $g$ is bounded and holomorphic on $D(a,\delta_0)^\ast$. Consider its Laurent expansion abour $a$. Boundedness implies that $h(z)=\sum_{n\ge 0}c_n(z-a)^n$, so $f(z)=1/(\sum c_n(z-a)^n)+b$. By considering limit, we see that $z=a$ is either a removable singularity or a pole. Contradiction.
+\end{proof}
+\section{Local uniform convergence}
+\begin{prop}
+    $(f_n:U\to\CC)$ is locally unif. conv. $\Leftrightarrow$ $(f_n|_K)$ is unif. conv. on any compact subset $K\subseteq U$.
+\end{prop}
+\begin{proof}
+    ($\Leftarrow$): Trivial. Find $D(a,r)\subseteq U$, then $\overline{D(a,r/2)}\subseteq U$ is compact. Use unif. conv. on compact subsets.\\
+    ($\Rightarrow$): $K\subseteq U$ compact. For each $a\in K$, $\exists r_a>0$ s.t. $f_n$ conv. unif. on $D(a,r_a)$, then $\bigcup_{a\in K}D(a,r_a)\supseteq K$ so admits a finite subcover $K\subseteq \bigcup_{i=1}^nD(a_i,r_{a_i})$. Let $\epsilon>0$ be given. For each $i$, there exists $N_i\in \NN$ s.t. $n\ge N_i\implies |f_n(z)-f(z)|<\epsilon$ for all $z\in D(a_i,r_{a_i})$ Take $N=\max_i N_i$.
+\end{proof}
+\begin{thm}
+    Let $(f_n)$ be a seq. of holo'c functions on a domain $U$. Suppose $f_n\to f$ loc. unif. on $U$, then $f$ is holo'c and $f_n'\to f'$ loc. unif.
+\end{thm}
+\begin{proof}
+    Preceding theorem implies that $f_n\to f$ unif. on any compact subset. So $f$ is cts (gives integrability). Pick any $a\in U$, and consider $\overline{D(a,r)}\subseteq U$, then by unif. conv. on its closure, have $\int_\gamma f=\lim_n\int_\gamma f_n=0$ (Cauchy's thm). So $f$ is holo'c on $D(a,r)$ by Morera. So $f$ is holo'c on $U$. Apply CIF to derivatives
+    \[|f_n'(w)-f'(w)|=\dfrac{1}{2\pi}\left|\int_{|z-a|=r}\dfrac{f_n(z)-f(z)}{(z-w)^2}dz\right|\]
+    Choose $|w-a|<r/2$ (sufficiently small), then can bound the integral. Then use unif. conv. of $(f_n)$ on compact subsets.
+\end{proof}
+\begin{prop}
+    Let $(f_n)$ be a seq of holo'c functions on a domain $U$. Suppose $f_n\to f$ loc. unif. on $U$. If $f_n$ is injective on $U$ for all $n$ then $f$ is either injective or constant.
+\end{prop}
+\begin{proof}
+    Suppose non-constant and non-injective, exists $z_1\neq z_2$ s.t. $f(z_1)=f(z_2)=a$.
+
+    By connectedness of $U$, can construct a (simple) closed curve $\gamma$ which winds around $z_1$ once and $z_2$ once. Since $f$ is non-constant (it takes the value $a$ at most finitely many time in the domain $\gamma$ bounds), can choose $\gamma$ so that $f(z)\neq a$ for all $z\in\gamma$. By loc. unif. conv. the same is true for $f_n$ for sufficiently large $n$. Apply argument principle
+    \[1\ge\dfrac{1}{2\pi i}\int_\gamma\dfrac{f_n'}{f_n-a}\to\dfrac{1}{2\pi i}\int_\gamma \dfrac{f}{f-a}\ge 2\] contradiction!
+\end{proof}
+\section{Counterexamples}
+\section{Computation Techniques}
+\subsection{Residue computation}
+\begin{enumerate}
+    \item Simple poles: If $f(z)=g(z)/h(z)$, $h$ has a simple zero at $a$ and $g$ holo'c nonzero at $a$, then $\operatorname{Res}_{z=a}(f)=g(a)/h'(a)$.
+    \item Poles of order $k$: If $f(z)=g(z)/(z-a)^k$, $g$ holo'c and non-zero at $a$. Then $\operatorname{Res}_{z=a}(f)=$ coeff of $(z-a)^{k-1}$ in $g$ expansion $= g^{(k-1)}(a)/(k-1)!$.
+    \item In general, need to compute Laurent expansion.
+\end{enumerate}
+\subsection{Basic estimates}
+\subsection{Contour choices}
+\subsection{Basic conformal equivalence}
+\begin{itemize}
+    \item linear map: rotation and scaling
+    \item Power map: $z\to z^n$, from sectors to sectors/half planes
+    \item Mobius maps: Disk to disk and disk to half plane ($(z-i)/(z+i)$: upper half plane to unit disk) [Can use Mobius maps on any region bounded by circles/lines.]
+    \item Exponential/Log: horizontal strip to sectors/half planes (Some branch of log can be its inverse).
+\end{itemize}
+\end{document}

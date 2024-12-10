@@ -1,0 +1,165 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{enumerate,bbm}
+\usepackage{tikz,graphicx,color,mathrsfs,color,hyperref}
+\usepackage{caption,float}
+\usepackage[a4paper,margin=1in,footskip=0.25in]{geometry}
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+\usepackage{tabularx,capt-of}
+
+\usepackage{blindtext}
+%Image-related packages
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage[export]{adjustbox}
+\usepackage{lipsum}
+
+%hyperref setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
+
+%New colors defined below
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+%Code listing style named "mystyle"
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{backcolour}, commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=left,                    
+  numbersep=5pt,                  
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2
+}
+
+%"mystyle" code listing set
+\lstset{style=mystyle}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}[section]
+\theoremstyle{remark}
+\newtheorem{rem}{Remark}
+\newtheorem{remS}[section]{defn}
+\newtheorem{lem}[defn]{Lemma}
+\theoremstyle{plain}
+\newtheorem{thm}[defn]{Theorem}
+\newtheorem{prop}[defn]{Proposition}
+\newtheorem{fact}[defn]{Fact}
+\newtheorem{crly}[defn]{Corollary}
+\newtheorem{conj}[defn]{Conjecture}
+\newtheorem{example}{Example}
+\theoremstyle{definition}
+%\newtheorem*{programming*}{Programming Task}
+
+%\newtheorem{innercustomgeneric}{\customgenericname}
+%\providecommand{\customgenericname}{}
+%\newcommand{\newcustomtheorem}[2]{%
+%  \newenvironment{#1}[1]
+%  {%
+%   \renewcommand\customgenericname{#2}%
+%   \renewcommand\theinnercustomgeneric{##1}%
+%   \innercustomgeneric
+%  }
+%  {\endinnercustomgeneric}
+%}
+
+%\newcustomtheorem{question}{Question}
+%\newcustomtheorem{programming}{Programming Task}
+
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\PP}{\mathbb{P}}
+
+\newcommand{\calD}{\mathcal{D}}
+
+\title{EM}
+\author{ }
+\date{ }
+
+\begin{document}
+\maketitle
+\section{Important equation/identity/formula}
+An important relation
+\[\dfrac{1}{c^2}=\mu_0\epsilon_0\]
+Charge conservation
+\[\dfrac{\partial\rho}{\partial t}+\nabla\cdot\vec J=0\]
+Maxwell's equations
+\begin{align*}
+    \begin{cases}
+    \nabla\cdot\vec E=\dfrac{\rho}{\epsilon_0}\\
+    \nabla\cdot \vec B=0\\
+    \nabla\times \vec E=-\dfrac{\partial\vec B}{\partial t}\\
+    \nabla\times \vec B=\mu_0 \vec J+\dfrac{1}{c^2}\dfrac{\partial \vec E}{\partial t}
+    \end{cases}
+\end{align*}
+Lorentz force law (relativistic)
+\[\dfrac{d}{dt}(m\gamma \vec v)=q[\vec E(t,\vec x)+\vec v\times \vec B(t,\vec x)]\]
+Ohm's law (relating current density and electric field)
+\[\vec J=\sigma\vec E\]
+For moving conductors, Ohm's law becomes
+\[\vec J=\sigma(\vec E+\vec v\times\vec B)\]
+Poynting vector
+\[\vec S=\dfrac{\vec E\times\vec B}{\mu_0}\]
+Energy density of electromagnetic field
+\[w=\dfrac{\epsilon_0}{2}\vec E^2+\dfrac{1}{2\mu_0}\vec B^2\]
+Resistance (of a thin wire)
+\[R=\dfrac{l}{\sigma A}\]
+
+\subsection{Electric field (static)}
+Electric potential $\vec E=-\nabla\phi$ (solve Poisson equation $\nabla^2\phi=-\rho/\epsilon_0$ using Green's function)
+\[\phi(\vec x)=-\int_{\RR^3}\dfrac{\rho(\vec x')}{4\pi\epsilon_0|\vec x-\vec x'|}d^3\vec x'\]
+Electric field is
+\[\vec E(\vec x)=\int_{\RR^3}\dfrac{\rho(\vec x')(\vec x-\vec x')}{4\pi\epsilon_0|\vec x-\vec x'|^3}d^3\vec x'\]
+Energy density of electric field
+\[w=\dfrac{\epsilon_0}{2}\vec E^2\]
+Gauss's Law
+\[-\int_S\nabla\phi\cdot d\vec S=\int_S \vec E\cdot d\vec S=\dfrac{Q[V]}{\epsilon_0}\]
+Surface charge and discontinuity in normal component
+\[\vec E_+-\vec E_-=\dfrac{\sigma}{\epsilon_0}\vec n\]
+The tangential component is continuous.
+\subsection{Magnetic field (static)}
+Vector potential $\vec B=\nabla\times\vec A$. (Solve Poisson equation $\nabla^2\vec A=\mu_0\vec J$)
+\[\vec A(\vec x)=\int_{\RR^3}\dfrac{\mu_0\vec J(\vec x')}{4\pi|\vec x-\vec x'|}d^3\vec x'\]
+Magnetic field is (expand by suffix notation)
+\[\vec B(\vec x)=\int_{\RR^3}\dfrac{\mu_0 \vec J(\vec x')\times(\vec x-\vec x')}{4\pi|\vec x-\vec x'|^3}d^3\vec x'\]
+Ampere's law
+\[\int_C\vec B\cdot d\vec x=\mu_0 I[S]\]
+Energy density
+\[w=\dfrac{1}{2\mu_0}\vec B^2\]
+Biot-Savart law (magnetic field produced by thin wire on curve $C$ with constant current $I$)
+\[\vec B(\vec x)=\dfrac{\mu_0I}{2\pi}\int_{C}\dfrac{d\vec x'\times (\vec x-\vec x')}{|\vec x-\vec x'|^3}\]
+Surface current and discontinuity
+\[\vec B_+-\vec B_-=\mu_0\vec K\times \vec n\]
+
+\subsection{Time dependence}
+Faraday's law (integrate M3 over a fixed surface and apply Stokes)
+\[\mathcal{E}(t)=-\dfrac{d\mathcal{F}}{dt}\]
+Faraday's law for time-dependent region
+\[-\dfrac{d\mathcal F}{dt}=\int_{C(t)}(\vec E(t,\vec x)+\vec{v}\times \vec B(t,\vec x))d\vec x=\mathcal E(t)\]
+
+\end{document}
